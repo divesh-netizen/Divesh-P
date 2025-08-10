@@ -1,59 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="neon-dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Divesh Kumar — Solution Engineer | DevOps | Cloud & MLOps</title>
   <meta name="description" content="Portfolio of Divesh Kumar — Solution Engineer focused on cloud‑agnostic ML platforms, DevOps, and full‑stack delivery." />
-  <!-- TailwindCSS (CDN) -->
+
+  <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
-          colors: {
-            brand: {
-              50: '#ebfffe', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee',
-              500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63'
-            }
-          }
+          boxShadow: {
+            glow: '0 0 0 1px rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,.35)',
+          },
         }
       }
     }
   </script>
   <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     html { scroll-behavior: smooth; }
-    /* Elegant gradient backdrop */
-    .bg-grid {
-      background-image: radial-gradient(1000px 600px at 80% -10%, rgba(34,211,238,0.15), rgba(0,0,0,0)),
-                        radial-gradient(800px 500px at 10% -20%, rgba(99,102,241,0.12), rgba(0,0,0,0));
+
+    /* THEME TOKENS — driven by data-theme on <html> */
+    :root {
+      --bg: #0b1220;           /* page background */
+      --elev: rgba(255,255,255,0.04); /* elevated card bg */
+      --text: #e5e7eb;         /* primary text */
+      --sub: #9aa4b2;          /* secondary text */
+      --stroke: rgba(255,255,255,0.08); /* borders */
+      --accent: #22d3ee;       /* primary accent */
+      --accent-2: #7c3aed;     /* secondary accent */
+      --ring: rgba(34,211,238,0.35);
+      --grad-a: rgba(34,211,238,.15);
+      --grad-b: rgba(124,58,237,.12);
     }
-    .glass { background: rgba(15,23,42,0.6); box-shadow: 0 10px 30px rgba(0,0,0,.35); backdrop-filter: blur(8px); }
-    .active-link { color: white !important; }
+
+    /* Neon Dark (default) */
+    :root[data-theme="neon-dark"] {
+      --bg: #0b1220; --elev: rgba(255,255,255,0.04); --text: #e5e7eb; --sub:#9aa4b2;
+      --stroke: rgba(255,255,255,0.08); --accent:#22d3ee; --accent-2:#7c3aed; --ring: rgba(34,211,238,0.35);
+      --grad-a: rgba(34,211,238,.15); --grad-b: rgba(124,58,237,.12);
+    }
+    /* Minimal Light */
+    :root[data-theme="minimal-light"] {
+      --bg:#f8fafc; --elev:#ffffff; --text:#0b1220; --sub:#4b5563; --stroke:#e5e7eb;
+      --accent:#0ea5e9; --accent-2:#6366f1; --ring: rgba(14,165,233,.35);
+      --grad-a: rgba(14,165,233,.12); --grad-b: rgba(99,102,241,.10);
+    }
+    /* Solarized */
+    :root[data-theme="solarized"] {
+      --bg:#002b36; --elev:#073642; --text:#eae9d2; --sub:#93a1a1; --stroke:rgba(255,255,255,0.1);
+      --accent:#b58900; --accent-2:#268bd2; --ring: rgba(38,139,210,.35);
+      --grad-a: rgba(38,139,210,.10); --grad-b: rgba(181,137,0,.10);
+    }
+    /* Royal Indigo */
+    :root[data-theme="royal-indigo"] {
+      --bg:#0f1020; --elev:#17172a; --text:#f3f4f6; --sub:#a5adcb; --stroke:rgba(255,255,255,0.08);
+      --accent:#8b5cf6; --accent-2:#06b6d4; --ring: rgba(139,92,246,.4);
+      --grad-a: rgba(139,92,246,.12); --grad-b: rgba(6,182,212,.12);
+    }
+
+    /* Utility skins */
+    .bg-page { background-color: var(--bg); }
+    .text-main { color: var(--text); }
+    .text-sub { color: var(--sub); }
+    .card { background: var(--elev); border: 1px solid var(--stroke); backdrop-filter: blur(8px); }
+    .stroke { border-color: var(--stroke); }
+    .ring-accent { box-shadow: 0 0 0 2px var(--ring); }
+    .grad-pane {
+      background-image: radial-gradient(1000px 600px at 80% -10%, var(--grad-a), rgba(0,0,0,0)),
+                        radial-gradient(800px 500px at 10% -20%, var(--grad-b), rgba(0,0,0,0));
+    }
+
+    /* Fancy underline link */
+    .link-underline { position: relative; }
+    .link-underline:after { content:""; position:absolute; left:0; bottom:-2px; width:100%; height:2px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform: scaleX(0); transform-origin:left; transition: transform .25s ease; }
+    .link-underline:hover:after { transform: scaleX(1); }
+
+    /* Timeline */
+    .timeline:before { content:""; position:absolute; left:16px; top:0; bottom:0; width:2px; background: var(--stroke); }
+    .timeline-item { position:relative; padding-left:48px; }
+    .timeline-item:before { content:""; position:absolute; left:8px; top:.5rem; width:16px; height:16px; border-radius:9999px; background: var(--accent); box-shadow:0 0 0 4px rgba(34,211,238,.15); }
   </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 bg-grid">
-  <!-- Header / Nav -->
-  <header class="sticky top-0 z-50 border-b border-white/10 backdrop-blur bg-slate-950/70">
+<body class="min-h-screen bg-page text-main grad-pane">
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-50 border-b stroke/50 backdrop-blur bg-[color:var(--bg)]/75">
     <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
-      <a href="#home" class="font-extrabold tracking-tight text-white text-lg">Divesh Kumar</a>
+      <a href="#home" class="font-extrabold tracking-tight text-main text-lg">Divesh Kumar</a>
+
       <nav class="hidden md:flex items-center gap-6 text-sm" id="main-nav">
-        <a href="#about" class="text-slate-300 hover:text-white">About</a>
-        <a href="#skills" class="text-slate-300 hover:text-white">Skills</a>
-        <a href="#projects" class="text-slate-300 hover:text-white">Projects</a>
-        <a href="#experience" class="text-slate-300 hover:text-white">Experience</a>
-        <a href="#achievements" class="text-slate-300 hover:text-white">Achievements</a>
-        <a href="#contact" class="text-slate-300 hover:text-white">Contact</a>
+        <a href="#about" class="text-sub hover:text-main link-underline">About</a>
+        <a href="#skills" class="text-sub hover:text-main link-underline">Skills</a>
+        <a href="#offerings" class="text-sub hover:text-main link-underline">Offerings</a>
+        <a href="#projects" class="text-sub hover:text-main link-underline">Projects</a>
+        <a href="#experience" class="text-sub hover:text-main link-underline">Experience</a>
+        <a href="#achievements" class="text-sub hover:text-main link-underline">Achievements</a>
+        <a href="#gallery" class="text-sub hover:text-main link-underline">Gallery</a>
+        <a href="#contact" class="text-sub hover:text-main link-underline">Contact</a>
       </nav>
+
+      <!-- Theme Switcher -->
       <div class="flex items-center gap-2">
-        <a href="https://github.com/divesh-netizen" class="p-2 rounded-full hover:bg-white/10" aria-label="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
-        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="p-2 rounded-full hover:bg-white/10" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-        <a href="mailto:diveshspur@gmail.com" class="p-2 rounded-full hover:bg-white/10" aria-label="Email"><i data-lucide="mail" class="w-5 h-5"></i></a>
-        <!-- Put your PDF in same folder and rename to Divesh_Kumar_Resume.pdf -->
-        <a href="Divesh_Kumar_Resume.pdf" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-brand-600 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-600/20">
+        <div class="relative">
+          <button id="themeBtn" class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm card hover:opacity-90">
+            <i data-lucide="swatch-book" class="w-4 h-4"></i>
+            <span id="themeLabel">Neon Dark</span>
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+          <div id="themeMenu" class="hidden absolute right-0 mt-2 w-44 card rounded-xl p-2 text-sm">
+            <button data-theme="neon-dark" class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Neon Dark</button>
+            <button data-theme="minimal-light" class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(0,0,0,0.06)]">Minimal Light</button>
+            <button data-theme="solarized" class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Solarized</button>
+            <button data-theme="royal-indigo" class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Royal Indigo</button>
+          </div>
+        </div>
+        <a href="Divesh_Kumar_Resume.pdf" class="hidden sm:inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-main card border stroke">
           <i data-lucide="download" class="w-4 h-4"></i> Resume
         </a>
       </div>
@@ -61,278 +128,378 @@
   </header>
 
   <!-- Hero -->
-  <section id="home" class="pt-14 pb-24">
-    <div class="max-w-7xl mx-auto px-5 grid md:grid-cols-12 gap-8 items-center">
-      <div class="md:col-span-7">
+  <section id="home" class="pt-14 pb-20">
+    <div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7">
+        <div class="inline-flex items-center gap-2 text-xs text-sub border stroke rounded-full px-3 py-1 mb-3">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Cloud‑agnostic ML • DevOps • Full‑stack
+        </div>
         <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
           Solution Engineer & DevOps —
-          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-brand-400 to-indigo-400">Cloud‑Agnostic ML & Full‑Stack Delivery</span>
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[color:var(--accent)] to-[color:var(--accent-2)]">Cloud‑Agnostic ML & Full‑Stack Delivery</span>
         </h1>
-        <p class="mt-6 text-lg text-slate-300 max-w-2xl">
+        <p class="mt-5 text-lg text-sub max-w-2xl">
           I build low-code ML platforms and scalable microservices on AWS & Azure, automating CI/CD and reducing time‑to‑deploy while keeping costs in check.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#projects" class="inline-flex items-center gap-2 rounded-xl bg-white/10 ring-1 ring-white/10 px-4 py-2 hover:bg-white/15">
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#projects" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent">
             View Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
-          <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-brand-600 px-4 py-2 font-semibold shadow-lg shadow-cyan-600/20">
+          <a href="#contact" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90">
             Contact Me
           </a>
         </div>
-        <div class="mt-10 grid grid-cols-3 gap-6">
-          <div>
+        <div class="mt-10 grid grid-cols-3 gap-6 text-center">
+          <div class="card rounded-2xl p-4">
             <div class="text-3xl font-extrabold">3+</div>
-            <div class="text-slate-400">Years Experience</div>
+            <div class="text-sub">Years Experience</div>
           </div>
-          <div>
+          <div class="card rounded-2xl p-4">
             <div class="text-3xl font-extrabold">100+</div>
-            <div class="text-slate-400">APIs Deployed</div>
+            <div class="text-sub">APIs Deployed</div>
           </div>
-          <div>
-            <div class="text-3xl font-extrabold">AWS · Azure · GCP</div>
-            <div class="text-slate-400">Clouds</div>
+          <div class="card rounded-2xl p-4">
+            <div class="text-xl font-extrabold">Serverless • Containers</div>
+            <div class="text-sub">Modern delivery</div>
           </div>
         </div>
       </div>
-      <div class="md:col-span-5">
-        <div class="glass rounded-2xl p-6">
-          <div class="grid grid-cols-2 gap-4 text-slate-200">
+
+      <aside class="lg:col-span-5">
+        <div class="card rounded-2xl p-6">
+          <div class="grid grid-cols-2 gap-4 text-main">
             <div class="space-y-4">
-              <div class="flex items-center gap-2"><i data-lucide="cloud" class="w-5 h-5"></i><span>Serverless & Multi‑Cloud</span></div>
+              <div class="flex items-center gap-2"><i data-lucide="cloud" class="w-5 h-5"></i><span>Multi‑Cloud & Serverless</span></div>
               <div class="flex items-center gap-2"><i data-lucide="boxes" class="w-5 h-5"></i><span>Containers & Orchestration</span></div>
               <div class="flex items-center gap-2"><i data-lucide="shield" class="w-5 h-5"></i><span>Security & Compliance</span></div>
             </div>
             <div class="space-y-4">
               <div class="flex items-center gap-2"><i data-lucide="cpu" class="w-5 h-5"></i><span>AutoML & Pipelines</span></div>
-              <div class="flex items-center gap-2"><i data-lucide="line-chart" class="w-5 h-5"></i><span>Real‑time Analytics</span></div>
+              <div class="flex items-center gap-2"><i data-lucide="line-chart" class="w-5 h-5"></i><span>Realtime Analytics</span></div>
               <div class="flex items-center gap-2"><i data-lucide="terminal" class="w-5 h-5"></i><span>CI/CD Automation</span></div>
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about" class="scroll-mt-24 py-20">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
+  <!-- About + Sticky Quick Links -->
+  <section id="about" class="scroll-mt-24 py-16">
+    <div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-8">
         <h2 class="text-3xl md:text-4xl font-bold">About</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">Solution Engineer with 3+ years building production-grade, cloud-native systems. I design low-code ML frameworks, automate deployments, and deliver secure, scalable apps across AWS and Azure.</p>
+        <p class="mt-3 text-sub max-w-3xl">Solution Engineer with 3+ years building production-grade, cloud-native systems. I design low-code ML frameworks, automate deployments, and deliver secure, scalable apps across AWS and Azure.</p>
+
+        <div class="mt-6 grid md:grid-cols-3 gap-6">
+          <div class="card rounded-2xl p-6">
+            <h4 class="font-semibold mb-2">What I Do</h4>
+            <p class="text-sm text-sub">Cloud-agnostic architecture • MLOps • FastAPI/Flask services • Terraform/Kubernetes • Observability • Compliance enablement (RBI-ready).</p>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <h4 class="font-semibold mb-2">How I Work</h4>
+            <p class="text-sm text-sub">Outcome-first, automate everything, write clean interfaces, measure impact (latency ↓, cost ↓, deploy time ↓), and keep feedback loops tight.</p>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <h4 class="font-semibold mb-2">What I Use</h4>
+            <p class="text-sm text-sub">AWS (ECS, Lambda, EC2, S3, CloudWatch), Azure, Docker, Kubernetes, Terraform, GitHub Actions, Bitbucket, PostgreSQL, MongoDB.</p>
+          </div>
+        </div>
       </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-6">
-          <h4 class="text-white font-semibold mb-2">What I Do</h4>
-          <p class="text-slate-300 text-sm">Cloud-agnostic architecture • MLOps • FastAPI/Flask services • Terraform/Kubernetes • Observability • Compliance enablement (RBI-ready).</p>
+
+      <aside class="lg:col-span-4 lg:sticky lg:top-24 h-max card rounded-2xl p-6">
+        <h4 class="font-semibold mb-3">Quick Links</h4>
+        <div class="flex flex-col gap-2 text-sm">
+          <a class="link-underline" href="#offerings">What I Offer</a>
+          <a class="link-underline" href="#projects">Featured Projects</a>
+          <a class="link-underline" href="#experience">Timeline</a>
+          <a class="link-underline" href="#achievements">Achievements</a>
+          <a class="link-underline" href="#contact">Get in Touch</a>
         </div>
-        <div class="glass rounded-2xl p-6">
-          <h4 class="text-white font-semibold mb-2">How I Work</h4>
-          <p class="text-slate-300 text-sm">Outcome-first, automate everything, write clean interfaces, measure impact (latency ↓, cost ↓, deployment time ↓), and keep feedback loops tight.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Offerings -->
+  <section id="offerings" class="scroll-mt-24 py-16">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">What I Offer</h2>
+      <p class="text-sub mb-8 max-w-3xl">Hands-on delivery with measurable outcomes—drawn from my work building cloud-agnostic ML platforms, modernizing systems, and automating delivery.</p>
+
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="cloud" class="w-5 h-5"></i><h3 class="font-semibold">Cloud & DevOps Foundations</h3></div>
+          <p class="text-sm text-sub">AWS, Azure, and GCP setup with IaC and best practices.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>Terraform-based environments, VPC/IAM hardening</li>
+            <li>Serverless & container platforms (Lambda, ECS, K8s)</li>
+            <li>Observability: CloudWatch/Prometheus + alerting</li>
+          </ul>
         </div>
-        <div class="glass rounded-2xl p-6">
-          <h4 class="text-white font-semibold mb-2">What I Use</h4>
-          <p class="text-slate-300 text-sm">AWS (ECS, Lambda, EC2, S3, CloudWatch), Azure, Docker, Kubernetes, Terraform, Jenkins, GitHub Actions, Bitbucket, PostgreSQL, MongoDB.</p>
+
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="cpu" class="w-5 h-5"></i><h3 class="font-semibold">ML Platform & MLOps</h3></div>
+          <p class="text-sm text-sub">From data to deployment with governance built in.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>Low-code pipelines, AutoML & feature prep</li>
+            <li>Model versioning, monitoring, and rollbacks</li>
+            <li>API endpoints with key-based auth & usage quotas</li>
+          </ul>
         </div>
+
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="git-branch" class="w-5 h-5"></i><h3 class="font-semibold">CI/CD & Automation</h3></div>
+          <p class="text-sm text-sub">Ship faster, safer—across monoliths and microservices.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>GitHub Actions, Jenkins, Bitbucket Pipelines</li>
+            <li>Blue/green & canary deployments, infra rollbacks</li>
+            <li>Cache, parallelism, and test orchestration</li>
+          </ul>
+        </div>
+
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="refresh-ccw" class="w-5 h-5"></i><h3 class="font-semibold">Legacy → Modern</h3></div>
+          <p class="text-sm text-sub">Migrate brittle systems to Python & serverless.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>Ruby/monolith to Python/FastAPI</li>
+            <li>Lambda/ECS refactors with cost controls</li>
+            <li>DB consolidation & data pipelines</li>
+          </ul>
+        </div>
+
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="shield-check" class="w-5 h-5"></i><h3 class="font-semibold">Security & Compliance</h3></div>
+          <p class="text-sm text-sub">Bake in controls, don’t bolt them on.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>IAM least-privilege, secret rotation</li>
+            <li>Audit trails, RBI-aligned checks & reporting</li>
+            <li>Policy-as-code and drift detection</li>
+          </ul>
+        </div>
+
+        <div class="card rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-2"><i data-lucide="line-chart" class="w-5 h-5"></i><h3 class="font-semibold">Cost & Reliability Tuning</h3></div>
+          <p class="text-sm text-sub">Cut waste without losing performance.</p>
+          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
+            <li>Right‑sizing, autoscaling, and caching</li>
+            <li>SLOs, alarms, and runbooks</li>
+            <li>Monthly optimization reviews</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#contact" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90"><i data-lucide='handshake' class='w-4 h-4'></i> Book a discovery call</a>
+        <a href="Divesh_Kumar_Resume.pdf" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i data-lucide='file-text' class='w-4 h-4'></i> View resume</a>
       </div>
     </div>
   </section>
 
   <!-- Skills -->
-  <section id="skills" class="scroll-mt-24 py-20">
+  <section id="skills" class="scroll-mt-24 py-16">
     <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold">Skills</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">A toolkit shaped by real projects — from ML platforms to high-traffic analytics.</p>
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold">Skills</h2>
+          <p class="mt-2 text-sub">A toolkit shaped by real projects — from ML platforms to high-traffic analytics.</p>
+        </div>
+        <a href="#" class="hidden md:inline-flex text-sm link-underline text-sub">Download full skill matrix</a>
       </div>
+
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="cloud" class="w-5 h-5"></i> Cloud & DevOps</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">AWS (ECS, EC2, S3, Lambda)</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Azure</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">GCP</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Docker</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Kubernetes</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Terraform</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Jenkins</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">GitHub Actions</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Bitbucket Pipelines</span>
+            <span class="px-3 py-1 rounded-full border stroke">AWS (ECS, EC2, S3, Lambda)</span>
+            <span class="px-3 py-1 rounded-full border stroke">Azure</span>
+            <span class="px-3 py-1 rounded-full border stroke">GCP</span>
+            <span class="px-3 py-1 rounded-full border stroke">Docker</span>
+            <span class="px-3 py-1 rounded-full border stroke">Kubernetes</span>
+            <span class="px-3 py-1 rounded-full border stroke">Terraform</span>
+            <span class="px-3 py-1 rounded-full border stroke">Jenkins</span>
+            <span class="px-3 py-1 rounded-full border stroke">GitHub Actions</span>
+            <span class="px-3 py-1 rounded-full border stroke">Bitbucket Pipelines</span>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="brain" class="w-5 h-5"></i> MLOps & Data</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">AutoML</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Feature Engineering</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">PySpark</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Pipelines</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Monitoring</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Model Versioning</span>
+            <span class="px-3 py-1 rounded-full border stroke">AutoML</span>
+            <span class="px-3 py-1 rounded-full border stroke">Feature Engineering</span>
+            <span class="px-3 py-1 rounded-full border stroke">PySpark</span>
+            <span class="px-3 py-1 rounded-full border stroke">Pipelines</span>
+            <span class="px-3 py-1 rounded-full border stroke">Monitoring</span>
+            <span class="px-3 py-1 rounded-full border stroke">Model Versioning</span>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="server" class="w-5 h-5"></i> Backend</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Python</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">FastAPI</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Flask</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Node.js</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">REST APIs</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Auth (API Keys)</span>
+            <span class="px-3 py-1 rounded-full border stroke">Python</span>
+            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
+            <span class="px-3 py-1 rounded-full border stroke">Flask</span>
+            <span class="px-3 py-1 rounded-full border stroke">Node.js</span>
+            <span class="px-3 py-1 rounded-full border stroke">REST APIs</span>
+            <span class="px-3 py-1 rounded-full border stroke">Auth (API Keys)</span>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="boxes" class="w-5 h-5"></i> Frontend</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">React.js</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Responsive UI</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Charts</span>
+            <span class="px-3 py-1 rounded-full border stroke">React.js</span>
+            <span class="px-3 py-1 rounded-full border stroke">Responsive UI</span>
+            <span class="px-3 py-1 rounded-full border stroke">Charts</span>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="shield" class="w-5 h-5"></i> Security & Compliance</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">IAM</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Least Privilege</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">RBI Compliance</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Audit Trails</span>
+            <span class="px-3 py-1 rounded-full border stroke">IAM</span>
+            <span class="px-3 py-1 rounded-full border stroke">Least Privilege</span>
+            <span class="px-3 py-1 rounded-full border stroke">RBI Compliance</span>
+            <span class="px-3 py-1 rounded-full border stroke">Audit Trails</span>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="card rounded-2xl p-6">
           <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i> Databases</h4>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">PostgreSQL</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">MongoDB</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">MySQL</span>
-            <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Redis</span>
+            <span class="px-3 py-1 rounded-full border stroke">PostgreSQL</span>
+            <span class="px-3 py-1 rounded-full border stroke">MongoDB</span>
+            <span class="px-3 py-1 rounded-full border stroke">MySQL</span>
+            <span class="px-3 py-1 rounded-full border stroke">Redis</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="scroll-mt-24 py-16">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Gallery</h2>
+
+      <!-- Wide banner photo -->
+      <figure class="rounded-2xl overflow-hidden card">
+        <img src="IMG_20241222_122433.jpg" alt="By the sea" class="w-full h-72 md:h-[22rem] object-cover" />
+      </figure>
+
+      <!-- Grid of portraits -->
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <figure class="rounded-2xl overflow-hidden card"><img src="IMG_20250308_180349.jpg" alt="Formal portrait" class="w-full h-72 object-cover" /></figure>
+        <figure class="rounded-2xl overflow-hidden card"><img src="IMG_20241221_182718.jpg" alt="Looking at the ocean" class="w-full h-72 object-cover" /></figure>
+        <figure class="rounded-2xl overflow-hidden card lg:col-span-1 sm:col-span-2"><img src="IMG_20241221_170125.jpg" alt="Open arms at the sea" class="w-full h-72 object-cover" /></figure>
       </div>
     </div>
   </section>
 
   <!-- Projects -->
-  <section id="projects" class="scroll-mt-24 py-20">
+  <section id="projects" class="scroll-mt-24 py-16">
     <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold">Projects</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">Selected work that moved the needle on speed, cost, and scale.</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
+      <p class="text-sub mb-8">Selected work that moved the needle on speed, cost, and scale.</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- ML_STUDIO Card -->
+        <article class="card rounded-2xl p-6 flex flex-col gap-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-xl font-semibold">ML_STUDIO — Low-Code ML Deployment Framework</h3>
+              <div class="mt-1 text-xs text-sub flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Feb 2025</div>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent-2)]/20 text-[color:var(--accent-2)]">Lead Developer</span>
+          </div>
+          <p class="text-sub">Low-code framework to develop, deploy, and scale ML models across AWS, Azure, and GCP with serverless-first design, AutoML pipelines, and dynamic scaling.</p>
+          <ul class="space-y-2 list-disc list-inside">
+            <li>Serverless architecture across clouds</li>
+            <li>AutoML & preprocessing pipelines</li>
+            <li>Dynamic scaling (Auto Loader)</li>
+            <li>MLOps CI/CD for versioning & rollbacks</li>
+            <li>API key auth; RBI-aligned auditing</li>
+          </ul>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> ↓ 60% deploy time</div>
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> ↓ 30% infra cost</div>
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Cross-cloud</div>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-full border stroke">AWS</span>
+            <span class="px-3 py-1 rounded-full border stroke">Azure</span>
+            <span class="px-3 py-1 rounded-full border stroke">GCP</span>
+            <span class="px-3 py-1 rounded-full border stroke">Docker</span>
+            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
+            <span class="px-3 py-1 rounded-full border stroke">Terraform</span>
+          </div>
+        </article>
+
+        <!-- AI Stock Tool Card -->
+        <article class="card rounded-2xl p-6 flex flex-col gap-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-xl font-semibold">AI‑Powered Stock Market Analysis Tool</h3>
+              <div class="mt-1 text-xs text-sub flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Feb 2025</div>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent)]/20 text-[color:var(--accent)]">Full Stack (DevOps)</span>
+          </div>
+          <p class="text-sub">Financial analytics platform integrating ChatGPT to turn natural language into structured insights for real-time stocks, options, and fundamentals.</p>
+          <ul class="space-y-2 list-disc list-inside">
+            <li>Prompts → financial expressions & queries</li>
+            <li>Realtime technical & fundamental pipelines</li>
+            <li>Backtests, screeners, portfolio analytics</li>
+            <li>ECS deployment with caching & parallelism</li>
+          </ul>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> ↓ 40% latency</div>
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> 10k+ peak users</div>
+            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Rich visuals</div>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-full border stroke">AWS ECS</span>
+            <span class="px-3 py-1 rounded-full border stroke">Flask</span>
+            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
+            <span class="px-3 py-1 rounded-full border stroke">React</span>
+            <span class="px-3 py-1 rounded-full border stroke">Node.js</span>
+            <span class="px-3 py-1 rounded-full border stroke">MongoDB</span>
+          </div>
+        </article>
       </div>
-      <div class="space-y-6">
-        <!-- ML_STUDIO -->
-        <div class="glass rounded-2xl p-6">
-          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <div>
-              <div class="flex flex-wrap items-center gap-3 mb-2">
-                <h3 class="text-xl font-semibold">ML_STUDIO — Low-Code ML Deployment Framework</h3>
-                <span class="px-3 py-1 rounded-full text-xs bg-gradient-to-r from-indigo-600 to-brand-600">Solution Engineer</span>
-                <div class="flex items-center gap-2 text-slate-400 text-sm"><i data-lucide="calendar" class="w-4 h-4"></i> Feb 2025</div>
-              </div>
-              <p class="text-slate-300 mb-4 max-w-3xl">Low-code framework to develop, deploy, and scale ML models across AWS, Azure, and GCP with serverless-first design, AutoML pipelines, and dynamic scaling.</p>
-              <ul class="space-y-2 list-disc list-inside text-slate-200 text-sm">
-                <li>Cloud-agnostic serverless architecture (AWS Lambda, Azure Functions, GCP Functions)</li>
-                <li>AutoML + preprocessing pipelines for automated feature engineering</li>
-                <li>Dynamic scaling (Auto Loader) optimizing resources based on demand</li>
-                <li>MLOps CI/CD for model versioning, monitoring, and rollbacks</li>
-                <li>Endpoint customization & API key auth; automated RBI-aligned auditing</li>
-              </ul>
-              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> ↓ 60% deployment time via pipelines</div>
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> ↓ 30% infra cost with serverless scaling</div>
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> Seamless cross-cloud deployments</div>
-              </div>
-            </div>
-            <div class="md:min-w-[220px]">
-              <div class="mb-2 text-slate-400 text-xs uppercase tracking-widest">Tech Stack</div>
-              <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">AWS</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Azure</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">GCP</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Docker</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">FastAPI</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Terraform</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Glue</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- AI Stock Tool -->
-        <div class="glass rounded-2xl p-6">
-          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <div>
-              <div class="flex flex-wrap items-center gap-3 mb-2">
-                <h3 class="text-xl font-semibold">AI‑Powered Stock Market Analysis Tool</h3>
-                <span class="px-3 py-1 rounded-full text-xs bg-gradient-to-r from-indigo-600 to-brand-600">Full Stack Developer (DevOps‑Focused)</span>
-                <div class="flex items-center gap-2 text-slate-400 text-sm"><i data-lucide="calendar" class="w-4 h-4"></i> Feb 2025</div>
-              </div>
-              <p class="text-slate-300 mb-4 max-w-3xl">Financial analytics platform integrating ChatGPT to turn natural language into structured insights for real-time stocks, options, and fundamentals.</p>
-              <ul class="space-y-2 list-disc list-inside text-slate-200 text-sm">
-                <li>ChatGPT prompts → financial expressions & queries</li>
-                <li>Real-time technical & fundamental pipelines; REST APIs with FastAPI/Flask</li>
-                <li>AI-based screeners, custom strategy backtests, and portfolio analytics</li>
-                <li>ECS deployment with caching & parallelism for high throughput</li>
-              </ul>
-              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> ↓ 40% processing times</div>
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> 10k+ concurrent users at peak</div>
-                <div class="glass rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5 text-brand-400"></i> Real-time graphical insights</div>
-              </div>
-            </div>
-            <div class="md:min-w-[220px]">
-              <div class="mb-2 text-slate-400 text-xs uppercase tracking-widest">Tech Stack</div>
-              <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">AWS ECS</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Flask</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">FastAPI</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">React</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">Node.js</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800/60 ring-1 ring-white/10">MongoDB</span>
-              </div>
-            </div>
-          </div>
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div class="card rounded-2xl p-6">
+          <h4 class="font-semibold mb-2">Control Case — Legacy Modernization</h4>
+          <p class="text-sub text-sm">Migrated Ruby (9 DBs) → Python on AWS Lambda; reduced technical debt and improved maintainability for production readiness.</p>
         </div>
-
-        <!-- Small grid for two more -->
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="glass rounded-2xl p-6">
-            <h4 class="text-white font-semibold mb-2">Control Case — Legacy Modernization</h4>
-            <p class="text-slate-300 text-sm">Migrated Ruby (9 DBs) → Python on AWS Lambda; reduced technical debt and improved maintainability for production readiness.</p>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <h4 class="text-white font-semibold mb-2">TenderHealth — CI/CD & Deployment Automation</h4>
-            <p class="text-slate-300 text-sm">Bitbucket Pipelines & Terraform for web/app; secure DNS, domain mapping, and faster, reliable releases.</p>
-          </div>
+        <div class="card rounded-2xl p-6">
+          <h4 class="font-semibold mb-2">TenderHealth — CI/CD & Deployment Automation</h4>
+          <p class="text-sub text-sm">Bitbucket Pipelines & Terraform for web/app; secure DNS, domain mapping, and faster, reliable releases.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Experience -->
-  <section id="experience" class="scroll-mt-24 py-20">
+  <!-- Experience (Timeline) -->
+  <section id="experience" class="scroll-mt-24 py-16">
     <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold">Experience</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">A quick timeline of roles and impact.</p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="glass rounded-2xl p-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Experience</h2>
+      <p class="text-sub mb-8">A quick timeline of roles and impact.</p>
+
+      <div class="relative timeline">
+        <div class="timeline-item card rounded-2xl p-6 mb-6">
           <div class="flex items-center justify-between mb-2">
-            <h4 class="text-white font-semibold">Innovatics — Solution Engineer</h4>
-            <span class="text-slate-400 text-sm">Apr 2024 – Present</span>
+            <h4 class="font-semibold">Innovatics — Solution Engineer</h4>
+            <span class="text-sub text-sm">Apr 2024 – Present</span>
           </div>
-          <ul class="list-disc list-inside text-slate-200 space-y-1 text-sm">
+          <ul class="list-disc list-inside space-y-1 text-sm text-main">
             <li>Led ML_STUDIO (low-code, cloud-agnostic ML platform).</li>
             <li>CI/CD with Terraform, Jenkins, Bitbucket; deployment time ↓.</li>
             <li>Serverless architecture; API key security; RBI-aligned audits.</li>
           </ul>
         </div>
-        <div class="glass rounded-2xl p-6">
+        <div class="timeline-item card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-2">
-            <h4 class="text-white font-semibold">Razor Edge — Full Stack Dev (DevOps)</h4>
-            <span class="text-slate-400 text-sm">Apr 2022 – Mar 2024</span>
+            <h4 class="font-semibold">Razor Edge — Full Stack Dev (DevOps)</h4>
+            <span class="text-sub text-sm">Apr 2022 – Mar 2024</span>
           </div>
-          <ul class="list-disc list-inside text-slate-200 space-y-1 text-sm">
+          <ul class="list-disc list-inside space-y-1 text-sm text-main">
             <li>Built AI-driven stock analytics & 100+ REST APIs.</li>
             <li>Automated helpdesk (NLP) and real-time notifications.</li>
             <li>Deployed scalable microservices on AWS ECS.</li>
@@ -343,32 +510,31 @@
   </section>
 
   <!-- Achievements -->
-  <section id="achievements" class="scroll-mt-24 py-20">
+  <section id="achievements" class="scroll-mt-24 py-16">
     <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold">Achievements</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">Recognition and measurable wins.</p>
-      </div>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Achievements</h2>
+      <p class="text-sub mb-8">Recognition and measurable wins.</p>
+
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-6 flex items-start gap-3">
-          <i data-lucide="award" class="w-6 h-6 text-brand-400"></i>
+        <div class="card rounded-2xl p-6 flex items-start gap-3">
+          <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
           <div>
-            <h5 class="text-white font-semibold">Top 60 / 2000+</h5>
-            <p class="text-slate-300 text-sm">IBCO LABS IoT Hackathon — high-availability cloud design.</p>
+            <h5 class="font-semibold">Top 60 / 2000+</h5>
+            <p class="text-sub text-sm">IBCO LABS IoT Hackathon — high-availability cloud design.</p>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6 flex items-start gap-3">
-          <i data-lucide="award" class="w-6 h-6 text-brand-400"></i>
+        <div class="card rounded-2xl p-6 flex items-start gap-3">
+          <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
           <div>
-            <h5 class="text-white font-semibold">Ops Efficiency ↑ 40%</h5>
-            <p class="text-slate-300 text-sm">AI-powered support bot for faster triage & response.</p>
+            <h5 class="font-semibold">Ops Efficiency ↑ 40%</h5>
+            <p class="text-sub text-sm">AI-powered support bot for faster triage & response.</p>
           </div>
         </div>
-        <div class="glass rounded-2xl p-6 flex items-start gap-3">
-          <i data-lucide="award" class="w-6 h-6 text-brand-400"></i>
+        <div class="card rounded-2xl p-6 flex items-start gap-3">
+          <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
           <div>
-            <h5 class="text-white font-semibold">Better Investing Decisions</h5>
-            <p class="text-slate-300 text-sm">ChatGPT in analytics to enhance strategy performance.</p>
+            <h5 class="font-semibold">Better Investing Decisions</h5>
+            <p class="text-sub text-sm">ChatGPT in analytics to enhance strategy performance.</p>
           </div>
         </div>
       </div>
@@ -376,24 +542,23 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="scroll-mt-24 py-20">
+  <section id="contact" class="scroll-mt-24 py-16">
     <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold">Contact</h2>
-        <p class="mt-3 text-slate-300 max-w-3xl">Open to full‑time remote roles (US/EU/UAE/SG/JP) and impactful projects.</p>
-      </div>
-      <div class="glass rounded-2xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Contact</h2>
+      <p class="text-sub mb-8 max-w-3xl">Open to full‑time remote roles (US/EU/UAE/SG/JP) and impactful projects.</p>
+
+      <div class="card rounded-2xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <h4 class="text-white font-semibold mb-2">Let’s build something.</h4>
-          <p class="text-slate-300 text-sm">Email me or connect on LinkedIn. I typically respond within a day.</p>
+          <h4 class="font-semibold mb-2">Let’s build something.</h4>
+          <p class="text-sub text-sm">Email me or connect on LinkedIn. I typically respond within a day.</p>
           <div class="mt-4 flex items-center gap-3">
-            <a href="mailto:diveshspur@gmail.com" class="inline-flex items-center gap-2 rounded-xl bg-white/10 ring-1 ring-white/10 px-4 py-2 hover:bg-white/15"><i data-lucide="mail" class="w-4 h-4"></i> Email</a>
-            <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="inline-flex items-center gap-2 rounded-xl bg-white/10 ring-1 ring-white/10 px-4 py-2 hover:bg-white/15"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</a>
-            <a href="https://github.com/divesh-netizen" class="inline-flex items-center gap-2 rounded-xl bg-white/10 ring-1 ring-white/10 px-4 py-2 hover:bg-white/15"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+            <a href="mailto:diveshspur@gmail.com" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i data-lucide="mail" class="w-4 h-4"></i> Email</a>
+            <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</a>
+            <a href="https://github.com/divesh-netizen" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
           </div>
         </div>
         <div class="w-full md:w-auto">
-          <a href="Divesh_Kumar_Resume.pdf" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-brand-600 px-4 py-2 font-semibold shadow-lg shadow-brand-600/20">
+          <a href="Divesh_Kumar_Resume.pdf" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90">
             <i data-lucide="download" class="w-4 h-4"></i> Download Resume
           </a>
         </div>
@@ -402,39 +567,71 @@
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 border-t border-white/10">
+  <footer class="py-10 border-t stroke">
     <div class="max-w-7xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-slate-400 text-sm">© <span id="year"></span> Divesh Kumar. All rights reserved.</p>
-      <div class="flex items-center gap-3 text-slate-400 text-sm">
-        <a href="https://github.com/divesh-netizen" class="hover:text-white">GitHub</a>
+      <p class="text-sub text-sm">© <span id="year"></span> Divesh Kumar. All rights reserved.</p>
+      <div class="flex items-center gap-3 text-sub text-sm">
+        <a href="https://github.com/divesh-netizen" class="hover:text-main">GitHub</a>
         <span>·</span>
-        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="hover:text-white">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="hover:text-main">LinkedIn</a>
         <span>·</span>
-        <a href="#home" class="hover:text-white">Back to top</a>
+        <a href="#home" class="hover:text-main">Back to top</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // Init icons
+    // Icons
     lucide.createIcons();
-    // Year
+
+    // Copyright year
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Active nav link on scroll
-    const sections = ['home','about','skills','projects','experience','achievements','contact'];
+
+    // Theme switcher
+    const themeBtn = document.getElementById('themeBtn');
+    const themeMenu = document.getElementById('themeMenu');
+    const themeLabel = document.getElementById('themeLabel');
+
+    const THEMES = {
+      'neon-dark': 'Neon Dark',
+      'minimal-light': 'Minimal Light',
+      'solarized': 'Solarized',
+      'royal-indigo': 'Royal Indigo',
+    };
+
+    function applyTheme(key) {
+      document.documentElement.setAttribute('data-theme', key);
+      localStorage.setItem('portfolio_theme', key);
+      themeLabel.textContent = THEMES[key] || 'Theme';
+      try { lucide.createIcons(); } catch (e) {}
+    }
+
+    const saved = localStorage.getItem('portfolio_theme');
+    if (saved && THEMES[saved]) applyTheme(saved);
+
+    themeBtn.addEventListener('click', () => themeMenu.classList.toggle('hidden'));
+    document.addEventListener('click', (e) => {
+      if (!themeBtn.contains(e.target)) themeMenu.classList.add('hidden');
+    });
+    themeMenu.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => { applyTheme(btn.dataset.theme); themeMenu.classList.add('hidden'); });
+    });
+
+    // Active link on scroll
+    const sections = ['home','about','offerings','skills','gallery','projects','experience','achievements','contact'];
     const nav = document.getElementById('main-nav');
     const links = nav ? Array.from(nav.querySelectorAll('a')) : [];
     const inView = (id) => {
       const el = document.getElementById(id);
       if (!el) return false;
       const rect = el.getBoundingClientRect();
-      return rect.top <= 120 && rect.bottom >= 120; // header height offset
+      return rect.top <= 120 && rect.bottom >= 120;
     };
     const setActive = () => {
-      sections.forEach((id, idx) => {
-        const link = links[idx];
+      sections.forEach((id) => {
+        const link = links.find(a => a.getAttribute('href') === `#${id}`);
         if (!link) return;
-        if (inView(id)) link.classList.add('active-link'); else link.classList.remove('active-link');
+        if (inView(id)) link.classList.add('text-main'); else link.classList.remove('text-main');
       });
     };
     document.addEventListener('scroll', setActive, { passive: true });

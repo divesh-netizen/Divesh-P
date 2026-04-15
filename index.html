@@ -1,1019 +1,1058 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="neon-dark">
-
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Divesh Kumar — Solution Engineer | DevOps | Cloud Platforms</title>
-  <meta name="description"
-    content="Portfolio of Divesh Kumar — Solution Engineer with 4+ years across DevOps, cloud platforms, full-stack engineering, Kubernetes, CI/CD, and ML platform delivery." />
-
-  <!-- Tailwind CSS (CDN) -->
+  <title>Divesh Kumar | Solution Engineer, DevOps & Cloud Platforms</title>
+  <meta
+    name="description"
+    content="Portfolio of Divesh Kumar, a solution engineer focused on cloud platforms, DevOps automation, Kubernetes delivery, backend systems, and production reliability."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
-          boxShadow: {
-            glow: '0 0 0 1px rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,.35)',
+          fontFamily: {
+            sans: ["Manrope", "ui-sans-serif", "system-ui"],
+            display: ["Space Grotesk", "Manrope", "ui-sans-serif", "system-ui"],
           },
-        }
-      }
-    }
+          boxShadow: {
+            soft: "0 24px 70px rgba(15, 23, 42, 0.14)",
+            float: "0 18px 50px rgba(180, 83, 9, 0.18)",
+          },
+        },
+      },
+    };
   </script>
-  <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
+    :root {
+      --bg: #f6efe6;
+      --bg-strong: #fffaf3;
+      --surface: rgba(255, 250, 243, 0.74);
+      --surface-strong: rgba(255, 248, 238, 0.96);
+      --text: #1f2937;
+      --muted: #5f6470;
+      --line: rgba(31, 41, 55, 0.12);
+      --accent: #c75d2c;
+      --accent-deep: #944216;
+      --accent-soft: rgba(199, 93, 44, 0.14);
+      --gold: #f0b949;
+      --teal: #1f766e;
+      --teal-soft: rgba(31, 118, 110, 0.12);
+    }
+
     html {
       scroll-behavior: smooth;
     }
 
-    /* THEME TOKENS — driven by data-theme on <html> */
-    :root {
-      --bg: #0b1220;
-      /* page background */
-      --elev: rgba(255, 255, 255, 0.04);
-      /* elevated card bg */
-      --text: #e5e7eb;
-      /* primary text */
-      --sub: #9aa4b2;
-      /* secondary text */
-      --stroke: rgba(255, 255, 255, 0.08);
-      /* borders */
-      --accent: #22d3ee;
-      /* primary accent */
-      --accent-2: #7c3aed;
-      /* secondary accent */
-      --ring: rgba(34, 211, 238, 0.35);
-      --grad-a: rgba(34, 211, 238, .15);
-      --grad-b: rgba(124, 58, 237, .12);
-    }
-
-    /* Neon Dark (default) */
-    :root[data-theme="neon-dark"] {
-      --bg: #0b1220;
-      --elev: rgba(255, 255, 255, 0.04);
-      --text: #e5e7eb;
-      --sub: #9aa4b2;
-      --stroke: rgba(255, 255, 255, 0.08);
-      --accent: #22d3ee;
-      --accent-2: #7c3aed;
-      --ring: rgba(34, 211, 238, 0.35);
-      --grad-a: rgba(34, 211, 238, .15);
-      --grad-b: rgba(124, 58, 237, .12);
-    }
-
-    /* Minimal Light */
-    :root[data-theme="minimal-light"] {
-      --bg: #f8fafc;
-      --elev: #ffffff;
-      --text: #0b1220;
-      --sub: #4b5563;
-      --stroke: #e5e7eb;
-      --accent: #0ea5e9;
-      --accent-2: #6366f1;
-      --ring: rgba(14, 165, 233, .35);
-      --grad-a: rgba(14, 165, 233, .12);
-      --grad-b: rgba(99, 102, 241, .10);
-    }
-
-    /* Solarized */
-    :root[data-theme="solarized"] {
-      --bg: #002b36;
-      --elev: #073642;
-      --text: #eae9d2;
-      --sub: #93a1a1;
-      --stroke: rgba(255, 255, 255, 0.1);
-      --accent: #b58900;
-      --accent-2: #268bd2;
-      --ring: rgba(38, 139, 210, .35);
-      --grad-a: rgba(38, 139, 210, .10);
-      --grad-b: rgba(181, 137, 0, .10);
-    }
-
-    /* Royal Indigo */
-    :root[data-theme="royal-indigo"] {
-      --bg: #0f1020;
-      --elev: #17172a;
-      --text: #f3f4f6;
-      --sub: #a5adcb;
-      --stroke: rgba(255, 255, 255, 0.08);
-      --accent: #8b5cf6;
-      --accent-2: #06b6d4;
-      --ring: rgba(139, 92, 246, .4);
-      --grad-a: rgba(139, 92, 246, .12);
-      --grad-b: rgba(6, 182, 212, .12);
-    }
-
-    /* Utility skins */
-    .bg-page {
-      background-color: var(--bg);
-    }
-
-    .text-main {
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(240, 185, 73, 0.2), transparent 34%),
+        radial-gradient(circle at 88% 15%, rgba(31, 118, 110, 0.14), transparent 28%),
+        linear-gradient(180deg, #fffaf3 0%, #f7efe4 42%, #efe3d3 100%);
       color: var(--text);
     }
 
-    .text-sub {
-      color: var(--sub);
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%23000000' fill-opacity='0.045'%3E%3Ccircle cx='12' cy='15' r='1'/%3E%3Ccircle cx='52' cy='46' r='1'/%3E%3Ccircle cx='84' cy='23' r='1'/%3E%3Ccircle cx='115' cy='70' r='1'/%3E%3Ccircle cx='155' cy='33' r='1'/%3E%3Ccircle cx='144' cy='108' r='1'/%3E%3Ccircle cx='95' cy='140' r='1'/%3E%3Ccircle cx='36' cy='118' r='1'/%3E%3Ccircle cx='24' cy='89' r='1'/%3E%3Ccircle cx='167' cy='155' r='1'/%3E%3C/g%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      z-index: -1;
     }
 
-    .card {
-      background: var(--elev);
-      border: 1px solid var(--stroke);
-      backdrop-filter: blur(8px);
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease;
     }
 
-    .stroke {
-      border-color: var(--stroke);
+    .panel-strong {
+      background: var(--surface-strong);
+      border: 1px solid rgba(31, 41, 55, 0.1);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease;
     }
 
-    .ring-accent {
-      box-shadow: 0 0 0 2px var(--ring);
+    .eyebrow {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
     }
 
-    .grad-pane {
-      background-image: radial-gradient(1000px 600px at 80% -10%, var(--grad-a), rgba(0, 0, 0, 0)),
-        radial-gradient(800px 500px at 10% -20%, var(--grad-b), rgba(0, 0, 0, 0));
+    .section-kicker {
+      color: var(--accent-deep);
     }
 
-    /* Fancy underline link */
-    .link-underline {
+    .outline-link {
       position: relative;
     }
 
-    .link-underline:after {
+    .outline-link::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: -2px;
+      bottom: -5px;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: linear-gradient(90deg, var(--accent), var(--gold));
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform .25s ease;
+      transition: transform 0.25s ease;
     }
 
-    .link-underline:hover:after {
+    .outline-link:hover::after,
+    .outline-link.active::after {
       transform: scaleX(1);
     }
 
-    /* Timeline */
-    .timeline:before {
+    .outline-link.active {
+      color: var(--text);
+    }
+
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(31, 41, 55, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 41, 55, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      background-position: center;
+    }
+
+    .hero-shell {
+      grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    }
+
+    .hero-stage {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(14px);
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: -1;
+      animation: drift 8s ease-in-out infinite;
+    }
+
+    .hero-orb-a {
+      top: -2rem;
+      right: 8%;
+      width: 10rem;
+      height: 10rem;
+      background: radial-gradient(circle, rgba(240, 185, 73, 0.38), rgba(240, 185, 73, 0));
+    }
+
+    .hero-orb-b {
+      bottom: 12%;
+      right: -1rem;
+      width: 8rem;
+      height: 8rem;
+      background: radial-gradient(circle, rgba(31, 118, 110, 0.28), rgba(31, 118, 110, 0));
+      animation-delay: -2.2s;
+    }
+
+    .hero-orb-c {
+      top: 22%;
+      left: -1rem;
+      width: 7rem;
+      height: 7rem;
+      background: radial-gradient(circle, rgba(199, 93, 44, 0.22), rgba(199, 93, 44, 0));
+      animation-delay: -4.4s;
+    }
+
+    .contact-compact a {
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .metrics-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .photo-button[data-active="true"] {
+      transform: translateY(-3px);
+      border-color: rgba(199, 93, 44, 0.55);
+      box-shadow: 0 14px 28px rgba(199, 93, 44, 0.18);
+    }
+
+    .photo-button {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .photo-button:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.16);
+      border-color: rgba(199, 93, 44, 0.18);
+    }
+
+    .glow-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow-button::before {
       content: "";
       position: absolute;
-      left: 16px;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 70%);
+      transform: translateX(-140%);
+      transition: transform 0.7s ease;
+    }
+
+    .glow-button:hover::before {
+      transform: translateX(140%);
+    }
+
+    .hero-tilt {
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease;
+      will-change: transform;
+    }
+
+    .pulse-dot {
+      position: relative;
+    }
+
+    .pulse-dot::after {
+      content: "";
+      position: absolute;
+      inset: -0.35rem;
+      border-radius: 999px;
+      border: 1px solid rgba(199, 93, 44, 0.35);
+      animation: pulseRing 2.6s ease-out infinite;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 15px;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background: var(--stroke);
+      width: 1px;
+      background: rgba(31, 41, 55, 0.18);
     }
 
     .timeline-item {
       position: relative;
-      padding-left: 48px;
+      padding-left: 3.35rem;
     }
 
-    .timeline-item:before {
+    .timeline-item::before {
       content: "";
       position: absolute;
-      left: 8px;
-      top: .5rem;
-      width: 16px;
-      height: 16px;
-      border-radius: 9999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(34, 211, 238, .15);
+      left: 4px;
+      top: 0.55rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 5px solid rgba(255, 250, 243, 1);
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      box-shadow: 0 0 0 1px rgba(31, 41, 55, 0.12);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-pop {
+      opacity: 0;
+      transform: translateY(22px) scale(0.98);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .reveal-pop.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .stagger-1 { transition-delay: 80ms; }
+    .stagger-2 { transition-delay: 160ms; }
+    .stagger-3 { transition-delay: 240ms; }
+    .stagger-4 { transition-delay: 320ms; }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -14px, 0) scale(1.05); }
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.75); opacity: 0.85; }
+      70% { transform: scale(1.5); opacity: 0; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .reveal-pop,
+      .reveal.visible,
+      .reveal-pop.visible,
+      .photo-button[data-active="true"] {
+        transition: none;
+        transform: none;
+        opacity: 1;
+      }
+
+      .hero-orb,
+      .pulse-dot::after {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 1023px) {
+      .hero-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-grid {
+        background-size: 26px 26px;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+<body class="grain min-h-screen font-sans antialiased">
+  <header class="sticky top-0 z-50 border-b border-[color:var(--line)] bg-[rgba(255,250,243,0.78)] backdrop-blur-xl">
+    <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
+      <a href="#home" class="font-display text-xl font-bold tracking-tight text-[color:var(--text)]">Divesh Kumar</a>
 
-<body class="min-h-screen bg-page text-main grad-pane">
-  <!-- Top Bar -->
-  <header class="sticky top-0 z-50 border-b stroke/50 backdrop-blur bg-[color:var(--bg)]/75">
-    <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
-      <a href="#home" class="font-extrabold tracking-tight text-main text-lg">Divesh Kumar</a>
-
-      <nav class="hidden md:flex items-center gap-6 text-sm" id="main-nav">
-        <a href="#about" class="text-sub hover:text-main link-underline">About</a>
-        <a href="#offerings" class="text-sub hover:text-main link-underline">Strengths</a>
-        <a href="#skills" class="text-sub hover:text-main link-underline">Skills</a>
-        <a href="#projects" class="text-sub hover:text-main link-underline">Projects</a>
-        <a href="#experience" class="text-sub hover:text-main link-underline">Experience</a>
-        <a href="#achievements" class="text-sub hover:text-main link-underline">Achievements</a>
-        <a href="#contact" class="text-sub hover:text-main link-underline">Contact</a>
+      <nav id="main-nav" class="hidden items-center gap-6 text-sm font-medium text-[color:var(--muted)] md:flex">
+        <a href="#about" class="outline-link transition hover:text-[color:var(--text)]">About</a>
+        <a href="#strengths" class="outline-link transition hover:text-[color:var(--text)]">Strengths</a>
+        <a href="#projects" class="outline-link transition hover:text-[color:var(--text)]">Projects</a>
+        <a href="#experience" class="outline-link transition hover:text-[color:var(--text)]">Experience</a>
+        <a href="#contact" class="outline-link transition hover:text-[color:var(--text)]">Contact</a>
       </nav>
 
-      <!-- Theme Switcher -->
-      <div class="flex items-center gap-2">
-        <div class="relative">
-          <button id="themeBtn"
-            class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm card hover:opacity-90">
-            <i data-lucide="swatch-book" class="w-4 h-4"></i>
-            <span id="themeLabel">Neon Dark</span>
-            <i data-lucide="chevron-down" class="w-4 h-4"></i>
-          </button>
-          <div id="themeMenu" class="hidden absolute right-0 mt-2 w-44 card rounded-xl p-2 text-sm">
-            <button data-theme="neon-dark"
-              class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Neon Dark</button>
-            <button data-theme="minimal-light"
-              class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(0,0,0,0.06)]">Minimal Light</button>
-            <button data-theme="solarized"
-              class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Solarized</button>
-            <button data-theme="royal-indigo"
-              class="w-full text-left px-3 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.06)]">Royal Indigo</button>
-          </div>
-        </div>
-        <a href="Divesh_Kumar_Resume.pdf"
-          class="hidden sm:inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-main card border stroke">
-          <i data-lucide="download" class="w-4 h-4"></i> Resume
+      <div class="flex items-center gap-3">
+        <button
+          id="menuBtn"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--line)] bg-[rgba(255,255,255,0.48)] text-[color:var(--text)] md:hidden"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+        <a
+          href="Divesh_Kumar_Resume.pdf"
+          class="hidden rounded-full bg-[color:var(--text)] px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[color:var(--accent-deep)] sm:inline-flex"
+        >
+          Resume
         </a>
       </div>
     </div>
+
+    <div id="mobileMenu" class="hidden border-t border-[color:var(--line)] bg-[rgba(255,250,243,0.96)] px-5 py-4 md:hidden">
+      <nav class="flex flex-col gap-4 text-sm font-medium text-[color:var(--muted)]">
+        <a href="#about">About</a>
+        <a href="#strengths">Strengths</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+        <a href="Divesh_Kumar_Resume.pdf" class="pt-2 font-semibold text-[color:var(--accent-deep)]">Download Resume</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- Hero -->
-  <section id="home" class="pt-14 pb-20">
-    <div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7">
-        <div class="inline-flex items-center gap-2 text-xs text-sub border stroke rounded-full px-3 py-1 mb-3">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Solution Engineer • DevOps • Kubernetes • Full-stack
-        </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-          Building reliable cloud platforms,
-          <span
-            class="block text-transparent bg-clip-text bg-gradient-to-r from-[color:var(--accent)] to-[color:var(--accent-2)]">
-            delivery systems, and scalable products
-          </span>
-        </h1>
-
-        <p class="mt-5 text-lg text-sub max-w-2xl">
-          I am Divesh Kumar, a Solution Engineer with 4+ years of experience across multi-cloud delivery, DevOps,
-          backend engineering, and platform reliability. My work spans Kubernetes platforms, CI/CD automation,
-          serverless systems, full-stack product development, and cloud-agnostic ML infrastructure across AWS, Azure,
-          and GCP.
-        </p>
-
-        <div class="mt-7 flex flex-wrap gap-3">
-          <a href="#projects"
-            class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent">
-            View Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </a>
-          <a href="#contact"
-            class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90">
-            Contact Me
-          </a>
-        </div>
-        <div class="mt-5 flex flex-wrap gap-4 text-sm text-sub">
-          <span class="inline-flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Bihar, India</span>
-          <span class="inline-flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> diveshspur@gmail.com</span>
-          <span class="inline-flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +91 76671 80078</span>
-        </div>
-        <div class="mt-10 grid grid-cols-3 gap-6 text-center">
-          <div class="card rounded-2xl p-4">
-            <div class="text-3xl font-extrabold">4+</div>
-            <div class="text-sub">Years Experience</div>
-          </div>
-          <div class="card rounded-2xl p-4">
-            <div class="text-xl font-extrabold">Multi-Cloud</div>
-            <div class="text-xl font-extrabold">Platform Delivery</div>
-            <div class="text-sub">AWS, Azure, GCP, Terraform, CI/CD</div>
-          </div>
-          <div class="card rounded-2xl p-4">
-            <div class="text-xl font-extrabold">Kubernetes</div>
-            <div class="text-xl font-extrabold">Security & Reliability</div>
-            <div class="text-sub">Helm, observability, CloudTrail, production response</div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="lg:col-span-5">
-        <div class="card rounded-2xl p-6">
-          <!-- Photo picker -->
-          <div class="space-y-3">
-            <div class="rounded-xl overflow-hidden border stroke bg-[color:var(--bg)]/60">
-              <img id="heroPreview" src="IMG_20241221_182718.jpg" alt="Profile preview"
-                class="w-full h-80 md:h-96 object-contain" />
-            </div>
-
-            <!-- Thumbnails -->
-            <div class="grid grid-cols-4 gap-2" id="heroThumbs">
-              <!-- Use any images you’ve already included on the page -->
-              <button class="group relative rounded-xl overflow-hidden border stroke p-0.5 ring-0"
-                data-hero-src="IMG_20241221_182718.jpg" aria-label="Photo 1">
-                <img src="IMG_20241221_182718.jpg"
-                  class="w-full h-16 object-cover rounded-lg group-data-[active=true]:ring-2 group-data-[active=true]:ring-[color:var(--accent)]" />
-              </button>
-              <button class="group relative rounded-xl overflow-hidden border stroke p-0.5 ring-0"
-                data-hero-src="IMG_20250308_180349.jpg" aria-label="Photo 2">
-                <img src="IMG_20250308_180349.jpg" class="w-full h-16 object-cover rounded-lg" />
-              </button>
-              <button class="group relative rounded-xl overflow-hidden border stroke p-0.5 ring-0"
-                data-hero-src="IMG_20241221_170125.jpg" aria-label="Photo 3">
-                <img src="IMG_20241221_170125.jpg" class="w-full h-16 object-cover rounded-lg" />
-              </button>
-              <button class="group relative rounded-xl overflow-hidden border stroke p-0.5 ring-0"
-                data-hero-src="IMG_20241222_122433.jpg" aria-label="Photo 4 (banner)">
-                <img src="IMG_20241222_122433.jpg" class="w-full h-16 object-cover rounded-lg" />
-              </button>
-            </div>
-          </div>
-
-          <!-- Divider -->
-          <div class="my-6 h-px bg-[color:var(--stroke)]"></div>
-
-          <div class="grid grid-cols-2 gap-4 text-main">
-            <div class="space-y-4">
-              <div class="flex items-center gap-2"><i data-lucide="cloud" class="w-5 h-5"></i><span>Multi‑Cloud &
-                  Serverless</span></div>
-              <div class="flex items-center gap-2"><i data-lucide="boxes" class="w-5 h-5"></i><span>Containers &
-                  Orchestration</span></div>
-              <div class="flex items-center gap-2"><i data-lucide="shield" class="w-5 h-5"></i><span>Security &
-                  Compliance</span></div>
-            </div>
-            <div class="space-y-4">
-              <div class="flex items-center gap-2"><i data-lucide="cpu" class="w-5 h-5"></i><span>AutoML &
-                  Pipelines</span></div>
-              <div class="flex items-center gap-2"><i data-lucide="line-chart" class="w-5 h-5"></i><span>Realtime
-                  Analytics</span></div>
-              <div class="flex items-center gap-2"><i data-lucide="terminal" class="w-5 h-5"></i><span>CI/CD
-                  Automation</span></div>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-    </div>
-  </section>
-
-  <!-- About + Sticky Quick Links -->
-  <section id="about" class="scroll-mt-24 py-16">
-    <div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-12 gap-8">
-      <div class="lg:col-span-8">
-        <h2 class="text-3xl md:text-4xl font-bold">About</h2>
-        <p class="mt-3 text-sub max-w-3xl">
-          My profile combines solution engineering, DevOps ownership, and hands-on product delivery. I work comfortably
-          across backend systems, deployment automation, client-facing technical discussions, and platform operations,
-          helping teams move from idea to production with cleaner architecture and stronger reliability.
-        </p>
-
-        <div class="mt-6 grid md:grid-cols-3 gap-6">
-          <div class="card rounded-2xl p-6">
-            <h4 class="font-semibold mb-2">What I Deliver</h4>
-            <p class="text-sm text-sub">
-              Cloud-native platforms, CI/CD pipelines, backend services, Kubernetes deployments, and production support
-              for systems that need to be scalable, auditable, and deployment-ready.
+  <main>
+    <section id="home" class="overflow-hidden px-5 pb-16 pt-8 sm:pt-12">
+      <div class="hero-stage hero-grid hero-shell mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-[color:var(--line)] bg-[rgba(255,250,243,0.58)] px-5 py-6 shadow-soft sm:px-6 sm:py-8 lg:px-10 lg:py-10">
+        <div class="hero-orb hero-orb-a"></div>
+        <div class="hero-orb hero-orb-b"></div>
+        <div class="hero-orb hero-orb-c"></div>
+        <div class="reveal flex flex-col justify-between">
+          <div>
+            <div class="eyebrow section-kicker text-[11px] font-bold sm:text-xs">Solution Engineer • Full Stack • DevOps • Kubernetes • Multi-Cloud</div>
+            <h1 class="mt-5 max-w-4xl font-display text-4xl font-bold leading-[0.96] text-[color:var(--text)] sm:text-5xl md:text-6xl lg:text-7xl">
+              Cloud-native systems,
+              <span class="text-[color:var(--accent)]">production-ready delivery,</span>
+              and engineering that scales with the business.
+            </h1>
+            <p class="mt-6 max-w-3xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+              Passionate Solution Engineer with 4+ years of experience delivering cloud-native, full-stack, and DevOps solutions across multi-cloud environments. I build scalable applications with Python, Kubernetes, Terraform, and CI/CD systems while staying close to reliability, observability, and client-facing solution delivery.
             </p>
           </div>
 
-          <div class="card rounded-2xl p-6">
-            <h4 class="font-semibold mb-2">How I Work</h4>
-            <p class="text-sm text-sub">
-              I focus on repeatable delivery: infrastructure as code, monitored rollouts, secure configurations, and
-              engineering decisions that reduce manual effort while improving production confidence.
-            </p>
-          </div>
-
-          <div class="card rounded-2xl p-6">
-            <h4 class="font-semibold mb-2">Highlights</h4>
-            <p class="text-sm text-sub">
-              AWS incident remediation, Helm-based Kubernetes delivery, cloud-agnostic ML framework work, 100+ API
-              development, and full-stack product engineering with React, Node.js, FastAPI, and Flask.
-            </p>
-          </div>
-        </div>
-      </div>
-
-
-      <aside class="lg:col-span-4 lg:sticky lg:top-24 h-max card rounded-2xl p-6">
-        <h4 class="font-semibold mb-3">Quick Links</h4>
-        <div class="flex flex-col gap-2 text-sm">
-          <a class="link-underline" href="#offerings">Core Strengths</a>
-          <a class="link-underline" href="#projects">Featured Projects</a>
-          <a class="link-underline" href="#experience">Timeline</a>
-          <a class="link-underline" href="#achievements">Achievements</a>
-          <a class="link-underline" href="#contact">Get in Touch</a>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- Offerings -->
-  <section id="offerings" class="scroll-mt-24 py-16">
-    <div class="max-w-7xl mx-auto px-5">
-      <h2 class="text-3xl md:text-4xl font-bold mb-3">Core Strengths</h2>
-      <p class="text-sub mb-8 max-w-3xl">The areas where I add the most value, based directly on my recent work across
-        Innovatics and Razor Edge.</p>
-
-      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="cloud" class="w-5 h-5"></i>
-            <h3 class="font-semibold">Cloud & DevOps Delivery</h3>
-          </div>
-          <p class="text-sm text-sub">Infrastructure, automation, and release systems for dependable delivery.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>Terraform, Jenkins, Bitbucket Pipelines, GitHub Actions, Azure DevOps</li>
-            <li>AWS, Azure, GCP, ECS, Lambda, Kubernetes, Docker</li>
-            <li>CloudWatch, Prometheus, alerting, rollout stability, incident support</li>
-          </ul>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="cpu" class="w-5 h-5"></i>
-            <h3 class="font-semibold">ML Platform Engineering</h3>
-          </div>
-          <p class="text-sm text-sub">Low-code ML systems with deployment, governance, and cloud flexibility.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>ML-Studio delivery across AWS, Azure, and GCP</li>
-            <li>AutoML, preprocessing, audit trail, compliance reporting</li>
-            <li>API security, endpoint customization, monitoring, RBI-aligned workflows</li>
-          </ul>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="git-branch" class="w-5 h-5"></i>
-            <h3 class="font-semibold">CI/CD & Automation</h3>
-          </div>
-          <p class="text-sm text-sub">Reducing manual deployment work and improving release consistency.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>Frontend and backend pipeline design for client projects</li>
-            <li>Staging and production automation with Terraform + Jenkins</li>
-            <li>Migration of legacy deployment workflows to faster, more reliable pipelines</li>
-          </ul>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-            <h3 class="font-semibold">Legacy Modernization</h3>
-          </div>
-          <p class="text-sm text-sub">Moving aging systems toward maintainable cloud-native architecture.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>Ruby to Python migration for a 9-database backend</li>
-            <li>AWS Lambda-based serverless execution</li>
-            <li>Reduced technical debt and improved production readiness</li>
-          </ul>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="shield-check" class="w-5 h-5"></i>
-            <h3 class="font-semibold">Security & Compliance</h3>
-          </div>
-          <p class="text-sm text-sub">Security response and governance embedded into real delivery work.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>AWS access key incident remediation and CloudTrail investigation</li>
-            <li>IAM policies, security groups, key-based API access</li>
-            <li>Audit trail, audit reporting, and compliance workflows</li>
-          </ul>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex items-center gap-2 mb-2"><i data-lucide="line-chart" class="w-5 h-5"></i>
-            <h3 class="font-semibold">Full-Stack Product Support</h3>
-          </div>
-          <p class="text-sm text-sub">Product engineering that connects backend, frontend, and operations.</p>
-          <ul class="mt-3 text-sm list-disc list-inside text-main space-y-1">
-            <li>React, Next.js, Node.js, Flask, FastAPI, MongoDB</li>
-            <li>100+ REST APIs for financial and platform workflows</li>
-            <li>AI-powered analytics and support automation with ChatGPT integration</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#contact"
-          class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90"><i
-            data-lucide='handshake' class='w-4 h-4'></i> Contact me</a>
-        <a href="Divesh_Kumar_Resume.pdf"
-          class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i
-            data-lucide='file-text' class='w-4 h-4'></i> View resume</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills -->
-  <section id="skills" class="scroll-mt-24 py-16">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="mb-8 flex items-end justify-between gap-4">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold">Skills</h2>
-          <p class="mt-2 text-sub">A hands-on stack built through delivery work across platform engineering, DevOps, and product development.</p>
-        </div>
-        <a href="Divesh_Kumar_Resume.pdf" class="hidden md:inline-flex text-sm link-underline text-sub">View full resume</a>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="cloud" class="w-5 h-5"></i> Cloud &
-            DevOps</h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">AWS (ECS, EC2, S3, Lambda, IAM)</span>
-            <span class="px-3 py-1 rounded-full border stroke">Azure</span>
-            <span class="px-3 py-1 rounded-full border stroke">GCP</span>
-            <span class="px-3 py-1 rounded-full border stroke">Docker</span>
-            <span class="px-3 py-1 rounded-full border stroke">Kubernetes</span>
-            <span class="px-3 py-1 rounded-full border stroke">Terraform</span>
-            <span class="px-3 py-1 rounded-full border stroke">Ansible</span>
-            <span class="px-3 py-1 rounded-full border stroke">Jenkins</span>
-            <span class="px-3 py-1 rounded-full border stroke">GitHub Actions</span>
-            <span class="px-3 py-1 rounded-full border stroke">Bitbucket Pipelines</span>
-          </div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="brain" class="w-5 h-5"></i> MLOps &
-            Data</h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">AutoML</span>
-            <span class="px-3 py-1 rounded-full border stroke">Feature Engineering</span>
-            <span class="px-3 py-1 rounded-full border stroke">PySpark</span>
-            <span class="px-3 py-1 rounded-full border stroke">Data Pipelines</span>
-            <span class="px-3 py-1 rounded-full border stroke">Pipelines</span>
-            <span class="px-3 py-1 rounded-full border stroke">Monitoring</span>
-            <span class="px-3 py-1 rounded-full border stroke">Model Versioning</span>
-          </div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="server" class="w-5 h-5"></i> Backend
-          </h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">Python</span>
-            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
-            <span class="px-3 py-1 rounded-full border stroke">Flask</span>
-            <span class="px-3 py-1 rounded-full border stroke">Django</span>
-            <span class="px-3 py-1 rounded-full border stroke">Node.js</span>
-            <span class="px-3 py-1 rounded-full border stroke">REST APIs</span>
-            <span class="px-3 py-1 rounded-full border stroke">Auth (API Keys)</span>
-          </div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="boxes" class="w-5 h-5"></i> Frontend
-          </h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">React.js</span>
-            <span class="px-3 py-1 rounded-full border stroke">Next.js</span>
-            <span class="px-3 py-1 rounded-full border stroke">Responsive UI</span>
-            <span class="px-3 py-1 rounded-full border stroke">Charts</span>
-          </div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="shield" class="w-5 h-5"></i> Security &
-            Compliance</h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">IAM</span>
-            <span class="px-3 py-1 rounded-full border stroke">Least Privilege</span>
-            <span class="px-3 py-1 rounded-full border stroke">RBI Compliance</span>
-            <span class="px-3 py-1 rounded-full border stroke">Audit Trails</span>
-            <span class="px-3 py-1 rounded-full border stroke">Security Groups</span>
-            <span class="px-3 py-1 rounded-full border stroke">CloudTrail</span>
-          </div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-3 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i>
-            Databases</h4>
-          <div class="flex flex-wrap gap-2 text-sm">
-            <span class="px-3 py-1 rounded-full border stroke">PostgreSQL</span>
-            <span class="px-3 py-1 rounded-full border stroke">MongoDB</span>
-            <span class="px-3 py-1 rounded-full border stroke">MySQL</span>
-            <span class="px-3 py-1 rounded-full border stroke">SQLite</span>
-            <span class="px-3 py-1 rounded-full border stroke">Redis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects" class="scroll-mt-24 py-16">
-    <div class="max-w-7xl mx-auto px-5">
-      <h2 class="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
-      <p class="text-sub mb-8">A few projects from my resume that best show the range of my work.</p>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- ML_STUDIO Card -->
-        <article class="card rounded-2xl p-6 flex flex-col gap-4">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="text-xl font-semibold">ML_STUDIO — Low-Code ML Deployment Framework</h3>
-              <div class="mt-1 text-xs text-sub flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i>
-                Innovatics</div>
+          <div class="metrics-grid mt-8 grid gap-4">
+            <div class="panel rounded-[1.5rem] p-5 shadow-soft">
+              <div class="text-3xl font-extrabold text-[color:var(--text)]">4+</div>
+              <p class="mt-1 text-sm text-[color:var(--muted)]">Years across solution engineering, product delivery, and DevOps ownership.</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent-2)]/20 text-[color:var(--accent-2)]">Lead
-              Developer</span>
-          </div>
-          <p class="text-sub">A cloud-agnostic low-code ML framework for rapid model development, deployment, governance,
-            and monitoring across AWS, Azure, and GCP.</p>
-          <ul class="space-y-2 list-disc list-inside">
-            <li>AutoML and preprocessing pipelines for faster model setup</li>
-            <li>Cloud-agnostic and serverless architecture across AWS, Azure, and GCP</li>
-            <li>Dynamic scaling, monitoring, and client-specific endpoint customization</li>
-            <li>Audit trail, audit reporting, and compliance report generation</li>
-            <li>API-key security and RBI-aligned governance workflows</li>
-          </ul>
-          <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Cross-cloud</div>
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Audit-ready</div>
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Serverless-first</div>
-          </div>
-          <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-3 py-1 rounded-full border stroke">AWS</span>
-            <span class="px-3 py-1 rounded-full border stroke">Azure</span>
-            <span class="px-3 py-1 rounded-full border stroke">GCP</span>
-            <span class="px-3 py-1 rounded-full border stroke">Docker</span>
-            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
-            <span class="px-3 py-1 rounded-full border stroke">Terraform</span>
-          </div>
-        </article>
-
-        <!-- AI Stock Tool Card -->
-        <article class="card rounded-2xl p-6 flex flex-col gap-4">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="text-xl font-semibold">AI‑Powered Stock Market Analysis Tool</h3>
-              <div class="mt-1 text-xs text-sub flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i>
-                Razor Edge</div>
+            <div class="panel rounded-[1.5rem] p-5 shadow-soft">
+              <div class="text-lg font-bold text-[color:var(--text)]">AWS • Azure • GCP</div>
+              <p class="mt-1 text-sm text-[color:var(--muted)]">Cloud-agnostic delivery spanning ML platforms, serverless, and infra automation.</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent)]/20 text-[color:var(--accent)]">Full
-              Stack (DevOps)</span>
+            <div class="panel rounded-[1.5rem] p-5 shadow-soft">
+              <div class="text-lg font-bold text-[color:var(--text)]">Kubernetes First</div>
+              <p class="mt-1 text-sm text-[color:var(--muted)]">Helm, observability, compliance tooling, alerting, and production-grade rollout work.</p>
+            </div>
           </div>
-          <p class="text-sub">Financial analytics platform integrating ChatGPT to turn natural language into structured
-            insights for real-time stocks, options, and fundamentals.</p>
-          <ul class="space-y-2 list-disc list-inside">
-            <li>Prompt engineering that translated user queries into structured financial expressions</li>
-            <li>Real-time technical indicators, fundamentals, and attribution workflows</li>
-            <li>Backtesting, trend analysis, and portfolio screening capabilities</li>
-            <li>Flask/FastAPI APIs on AWS ECS with caching and parallel processing</li>
-          </ul>
-          <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> AI analytics</div>
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> ECS deployed</div>
-            <div class="card rounded-xl p-3 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Data-driven UX</div>
-          </div>
-          <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-3 py-1 rounded-full border stroke">AWS ECS</span>
-            <span class="px-3 py-1 rounded-full border stroke">Flask</span>
-            <span class="px-3 py-1 rounded-full border stroke">FastAPI</span>
-            <span class="px-3 py-1 rounded-full border stroke">React</span>
-            <span class="px-3 py-1 rounded-full border stroke">Node.js</span>
-            <span class="px-3 py-1 rounded-full border stroke">MongoDB</span>
-          </div>
-        </article>
 
-        <!-- Compliance.ai Kubernetes Platform Card -->
-        <article class="card rounded-2xl p-6 flex flex-col gap-4">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="text-xl font-semibold">Compliance.ai — Kubernetes Deployment & Observability</h3>
-              <div class="mt-1 text-xs text-sub flex items-center gap-2">
-                <i data-lucide="calendar" class="w-4 h-4"></i>
-                Innovatics
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#projects"
+              class="glow-button inline-flex items-center gap-2 rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold text-white shadow-float transition hover:-translate-y-0.5 hover:bg-[color:var(--accent-deep)]"
+            >
+              Explore Projects
+              <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+            </a>
+            <a
+              href="#contact"
+              class="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[rgba(255,255,255,0.6)] px-6 py-3 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5"
+            >
+              Let’s Work Together
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal-pop stagger-1 flex flex-col gap-5 lg:pl-6">
+          <div class="hero-tilt panel-strong overflow-hidden rounded-[2rem] p-4 shadow-soft" id="heroTiltCard">
+            <div class="relative overflow-hidden rounded-[1.5rem] bg-[linear-gradient(135deg,rgba(240,185,73,0.18),rgba(31,118,110,0.12))]">
+              <img
+                id="heroPreview"
+                src="IMG_20241221_182718.jpg"
+                alt="Portrait of Divesh Kumar"
+                class="h-80 w-full object-cover object-top sm:h-[26rem]"
+              />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(31,41,55,0.75)] via-[rgba(31,41,55,0.2)] to-transparent p-6 text-white">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">Based in Bihar, India</p>
+                <p class="mt-2 max-w-sm text-sm leading-6 text-white/90">
+                  Technical lead and solution engineer focused on cloud-native delivery, DevOps systems, Kubernetes platforms, and modern Python backends.
+                </p>
+              </div>
+              <div class="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-[rgba(255,250,243,0.85)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-deep)] shadow-soft">
+                <span class="pulse-dot inline-block h-2.5 w-2.5 rounded-full bg-[color:var(--accent)]"></span>
+                Available for opportunities
               </div>
             </div>
-            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent-2)]/20 text-[color:var(--accent-2)]">
-              DevOps Lead
-            </span>
           </div>
 
-          <p class="text-sub">A production-ready Kubernetes compliance platform with standardized Helm deployments,
-            Cloud CDN delivery, and multi-level alerting for reliable operations.</p>
-
-          <ul class="space-y-2 list-disc list-inside">
-            <li>Helm-based deployments with environment-specific configurations</li>
-            <li>Kubernetes namespace isolation and resource governance</li>
-            <li>UI deployment via Cloud CDN for low-latency static delivery</li>
-            <li>Infrastructure-level alerts (pods, nodes, CPU/memory, restarts)</li>
-            <li>Application-level alerts (service health, 4xx/5xx error rate)</li>
-          </ul>
-
-          <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              Helm standardization
-            </div>
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              Prod-grade alerts
-            </div>
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              CDN UI delivery
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-3 py-1 rounded-full border stroke">Kubernetes</span>
-            <span class="px-3 py-1 rounded-full border stroke">Helm</span>
-            <span class="px-3 py-1 rounded-full border stroke">Cloud CDN</span>
-            <span class="px-3 py-1 rounded-full border stroke">Prometheus</span>
-            <span class="px-3 py-1 rounded-full border stroke">Alerting</span>
-            <span class="px-3 py-1 rounded-full border stroke">DevOps</span>
-          </div>
-        </article>
-
-        <!-- TenderHealth AWS Security Incident Response Card -->
-        <article class="card rounded-2xl p-6 flex flex-col gap-4">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="text-xl font-semibold">TenderHealth — AWS Security Incident Response & Remediation</h3>
-              <div class="mt-1 text-xs text-sub flex items-center gap-2">
-                <i data-lucide="calendar" class="w-4 h-4"></i>
-                Innovatics
+          <div class="grid gap-4 sm:grid-cols-[1.1fr_0.9fr]">
+            <div class="panel hover-lift contact-compact rounded-[1.75rem] p-5 shadow-soft">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--accent-deep)]">Contact</p>
+              <div class="mt-4 space-y-3 text-sm text-[color:var(--muted)]">
+                <a class="flex items-center gap-3 hover:text-[color:var(--text)]" href="mailto:diveshspur@gmail.com">
+                  <i data-lucide="mail" class="h-4 w-4 text-[color:var(--accent)]"></i>
+                  diveshspur@gmail.com
+                </a>
+                <a class="flex items-center gap-3 hover:text-[color:var(--text)]" href="tel:+917667180078">
+                  <i data-lucide="phone" class="h-4 w-4 text-[color:var(--accent)]"></i>
+                  +91 76671 80078
+                </a>
+                <a class="flex items-center gap-3 hover:text-[color:var(--text)]" href="https://www.linkedin.com/in/divesh-kumar-26040a16a/">
+                  <i data-lucide="linkedin" class="h-4 w-4 text-[color:var(--accent)]"></i>
+                  LinkedIn Profile
+                </a>
+                <div class="flex items-start gap-3">
+                  <i data-lucide="map-pin" class="mt-0.5 h-4 w-4 text-[color:var(--accent)]"></i>
+                  <span>Dhanauti Sultanpur, Chhapra, Bihar, India</span>
+                </div>
               </div>
             </div>
-            <span class="px-3 py-1 rounded-full text-xs bg-[color:var(--accent)]/20 text-[color:var(--accent)]">
-              DevOps / Security
-            </span>
-          </div>
 
-          <p class="text-sub">Handled a critical production AWS credential leakage incident end-to-end, restoring
-            security across services, environments, and deployment systems.</p>
-
-          <ul class="space-y-2 list-disc list-inside">
-            <li>Rotated and re-wired AWS access keys across environments, services, and deployment pipelines</li>
-            <li>Identified unauthorized role assumptions and lateral movement patterns using AWS CloudTrail</li>
-            <li>Implemented containment and cleanup actions to prevent further misuse of credentials</li>
-            <li>Coordinated extended incident sessions with AWS Support and delivered remediation updates to
-              stakeholders</li>
-            <li>Performed continuous monitoring over the weekend to confirm stability and zero re-occurrence</li>
-          </ul>
-
-          <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              Full key rotation
-            </div>
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              CloudTrail investigation
-            </div>
-            <div class="card rounded-xl p-3 flex items-center gap-2">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-              Weekend monitoring
+            <div class="panel hover-lift rounded-[1.75rem] p-5 shadow-soft">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--accent-deep)]">Photo Reel</p>
+              <div id="heroThumbs" class="mt-4 grid grid-cols-4 gap-2">
+                <button class="photo-button overflow-hidden rounded-2xl border border-[color:var(--line)] transition" data-hero-src="IMG_20241221_182718.jpg" data-active="true" aria-label="Photo 1">
+                  <img src="IMG_20241221_182718.jpg" alt="" class="h-16 w-full object-cover" />
+                </button>
+                <button class="photo-button overflow-hidden rounded-2xl border border-[color:var(--line)] transition" data-hero-src="IMG_20250308_180349.jpg" aria-label="Photo 2">
+                  <img src="IMG_20250308_180349.jpg" alt="" class="h-16 w-full object-cover" />
+                </button>
+                <button class="photo-button overflow-hidden rounded-2xl border border-[color:var(--line)] transition" data-hero-src="IMG_20241221_170125.jpg" aria-label="Photo 3">
+                  <img src="IMG_20241221_170125.jpg" alt="" class="h-16 w-full object-cover" />
+                </button>
+                <button class="photo-button overflow-hidden rounded-2xl border border-[color:var(--line)] transition" data-hero-src="IMG_20241222_122433.jpg" aria-label="Photo 4">
+                  <img src="IMG_20241222_122433.jpg" alt="" class="h-16 w-full object-cover" />
+                </button>
+              </div>
             </div>
           </div>
-
-          <div class="flex flex-wrap gap-2 text-xs">
-            <span class="px-3 py-1 rounded-full border stroke">AWS</span>
-            <span class="px-3 py-1 rounded-full border stroke">IAM</span>
-            <span class="px-3 py-1 rounded-full border stroke">CloudTrail</span>
-            <span class="px-3 py-1 rounded-full border stroke">CI/CD</span>
-            <span class="px-3 py-1 rounded-full border stroke">Incident Response</span>
-            <span class="px-3 py-1 rounded-full border stroke">Security</span>
-          </div>
-        </article>
-
-        <div class="card rounded-2xl p-6">
-          <h4 class="font-semibold mb-2">Control Case — Legacy Modernization</h4>
-          <p class="text-sub text-sm">Migrated a complex Ruby backend with 9 databases to Python on AWS Lambda, improving
-            maintainability and preparing the system for production-ready operation.</p>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- Experience (Timeline) -->
-  <section id="experience" class="scroll-mt-24 py-16">
-  <div class="max-w-7xl mx-auto px-5">
-    <h2 class="text-3xl md:text-4xl font-bold mb-3">Experience</h2>
-    <p class="text-sub mb-8">My recent roles and the type of ownership I carried in each one.</p>
-
-    <div class="relative timeline">
-      <div class="timeline-item card rounded-2xl p-6 mb-6">
-        <div class="flex items-center justify-between mb-2">
-          <h4 class="font-semibold">Innovatics — Technical Lead / Solution Engineer</h4>
-          <span class="text-sub text-sm">Apr 2024 – Present</span>
+    <section id="about" class="px-5 py-16">
+      <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div class="reveal">
+          <p class="eyebrow section-kicker text-xs font-bold">About Me</p>
+          <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">I help teams move from idea to production with less chaos.</h2>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--muted)]">
+            My work combines platform engineering, DevOps ownership, backend development, and client-facing technical delivery. I’m comfortable leading demos, aligning engineering with business goals, designing cloud-agnostic systems, and supporting high-stakes production environments when reliability matters most.
+          </p>
         </div>
-        <ul class="list-disc list-inside space-y-1 text-sm text-main">
-          <li>Led ML-Studio, a cloud-agnostic low-code ML framework for rapid model development and deployment across AWS, Azure, and GCP.</li>
-          <li>Built and maintained CI/CD systems with Terraform, Jenkins, Bitbucket Pipelines, and Azure DevOps.</li>
-          <li>Delivered production-grade Kubernetes deployments using Helm, Cloud CDN, and infra/app observability.</li>
-          <li>Implemented audit trail, audit reporting, and compliance reporting capabilities for enterprise governance needs.</li>
-          <li>Handled critical AWS incident remediation, including credential rotation, CloudTrail investigation, and coordination with AWS Support.</li>
-        </ul>
-      </div>
 
-      <div class="timeline-item card rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-2">
-          <h4 class="font-semibold">Razor Edge — Full Stack Developer (DevOps-Focused)</h4>
-          <span class="text-sub text-sm">Apr 2022 – Mar 2024</span>
-        </div>
-        <ul class="list-disc list-inside space-y-1 text-sm text-main">
-          <li>Built and maintained full-stack applications with React.js, Next.js, Node.js, and MongoDB.</li>
-          <li>Developed and deployed 100+ REST APIs for financial analytics and decision workflows.</li>
-          <li>Designed AWS ECS-based backend services with caching and parallel processing for better performance.</li>
-          <li>Built AI-powered analytics and support automation systems using NLP, ML, and ChatGPT integration.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <!-- Achievements -->
-  <section id="achievements" class="scroll-mt-24 py-16">
-  <div class="max-w-7xl mx-auto px-5">
-    <h2 class="text-3xl md:text-4xl font-bold mb-3">Achievements</h2>
-    <p class="text-sub mb-8">A few outcomes and recognitions that stand out from the resume.</p>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="card rounded-2xl p-6 flex items-start gap-3">
-        <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
-        <div>
-          <h5 class="font-semibold">Top 60 / 2000+</h5>
-          <p class="text-sub text-sm">IBCO LABS IoT Hackathon — high-availability cloud architecture design.</p>
-        </div>
-      </div>
-
-      <div class="card rounded-2xl p-6 flex items-start gap-3">
-        <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
-        <div>
-          <h5 class="font-semibold">AWS Incident Remediation</h5>
-          <p class="text-sub text-sm">Secured production by rotating leaked credentials, tracing unauthorized role activity via CloudTrail, and closing the loop with AWS Support.</p>
-        </div>
-      </div>
-
-      <div class="card rounded-2xl p-6 flex items-start gap-3">
-        <i data-lucide="award" class="w-6 h-6 text-[color:var(--accent)]"></i>
-        <div>
-          <h5 class="font-semibold">Compliance & Audit Enablement</h5>
-          <p class="text-sub text-sm">Delivered audit trail, audit reporting, and compliance report generation to strengthen governance for an enterprise ML platform.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-6 grid md:grid-cols-2 gap-6">
-      <div class="card rounded-2xl p-6">
-        <h4 class="font-semibold mb-3">Certifications</h4>
-        <ul class="text-sm text-sub space-y-2">
-          <li>AWS Certified Solutions Architect - Associate (In Progress)</li>
-          <li>Python for Everybody Specialization (Coursera)</li>
-          <li>Data Analysis & Visualization with Python (Coursera)</li>
-          <li>React.js and Flask project-based learning</li>
-        </ul>
-      </div>
-
-      <div class="card rounded-2xl p-6">
-        <h4 class="font-semibold mb-3">Education</h4>
-        <p class="text-sm text-sub">
-          Institute of Engineering and Management, Kolkata<br />
-          B.Tech in Electronics and Communication Engineering<br />
-          CPI: 8.84 | Aug 2018 - Jun 2022
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <!-- Contact -->
-  <section id="contact" class="scroll-mt-24 py-16">
-    <div class="max-w-7xl mx-auto px-5">
-      <h2 class="text-3xl md:text-4xl font-bold mb-3">Contact</h2>
-      <p class="text-sub mb-8 max-w-3xl">Open to solution engineering, DevOps, cloud platform, and full-stack opportunities where I can contribute across delivery, automation, and production reliability.</p>
-
-      <div class="card rounded-2xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        <div>
-          <h4 class="font-semibold mb-2">Let’s connect.</h4>
-          <p class="text-sub text-sm">Email, call, or connect on LinkedIn. You can also review my GitHub and resume from here.</p>
-          <div class="mt-4 flex items-center gap-3">
-            <a href="mailto:diveshspur@gmail.com"
-              class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i
-                data-lucide="mail" class="w-4 h-4"></i> Email</a>
-            <a href="tel:+917667180078"
-              class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i
-                data-lucide="phone" class="w-4 h-4"></i> Call</a>
-            <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/"
-              class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i
-                data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</a>
-            <a href="https://github.com/divesh-netizen"
-              class="inline-flex items-center gap-2 rounded-xl px-4 py-2 card border stroke hover:ring-accent"><i
-                data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+        <div class="reveal panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 120ms;">
+          <div class="grid gap-5">
+            <div>
+              <p class="text-sm font-semibold text-[color:var(--text)]">What I bring</p>
+              <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">
+                Cloud-native architecture, repeatable CI/CD, Kubernetes deployment workflows, backend service delivery, and platform reliability thinking across both product and platform work.
+              </p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-[color:var(--text)]">How I work</p>
+              <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">
+                I prefer systems that are observable, auditable, easy to operate, and strong enough that teams can move faster without depending on constant firefighting.
+              </p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-[color:var(--text)]">Recent focus</p>
+              <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">
+                Multi-cloud ML platforms, secure Kubernetes delivery, incident remediation, serverless modernization, and analytics-heavy product systems powered by AI workflows.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="w-full md:w-auto">
-          <a href="Divesh_Kumar_Resume.pdf"
-            class="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold shadow-glow text-[color:var(--bg)] bg-[color:var(--accent)] hover:opacity-90">
-            <i data-lucide="download" class="w-4 h-4"></i> Download Resume
-          </a>
+      </div>
+    </section>
+
+    <section id="strengths" class="px-5 py-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow section-kicker text-xs font-bold">Core Strengths</p>
+            <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">The work I’m strongest at right now.</h2>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-[color:var(--muted)]">
+            These areas reflect the type of ownership I’ve carried across Innovatics and Razor Edge, from infra automation to product engineering and security response.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[color:var(--accent-soft)] p-3 text-[color:var(--accent)]"><i data-lucide="cloud" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">Cloud & DevOps Delivery</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Infrastructure, automation, and deployment systems built for dependable delivery.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Terraform, Jenkins, Bitbucket Pipelines, GitHub Actions, Azure DevOps</li>
+              <li>AWS, Azure, GCP, ECS, Lambda, Kubernetes, Docker</li>
+              <li>Monitoring, alerting, rollout safety, and incident response ownership</li>
+            </ul>
+          </article>
+
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 80ms;">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[color:var(--teal-soft)] p-3 text-[color:var(--teal)]"><i data-lucide="brain-circuit" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">ML Platform Engineering</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Low-code ML delivery with cloud flexibility, governance, and operational clarity.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>ML-Studio delivery across AWS, Azure, and GCP</li>
+              <li>AutoML, preprocessing, audit trail, and compliance reporting</li>
+              <li>AutoML, preprocessing, audit trail, and compliance reporting</li>
+              <li>Endpoint customization, API-key security, and dynamic scaling workflows</li>
+            </ul>
+          </article>
+
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 160ms;">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[rgba(240,185,73,0.18)] p-3 text-[#b7791f]"><i data-lucide="workflow" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">CI/CD & Automation</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Faster releases through cleaner pipelines and better repeatability.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Deployment pipelines for both frontend and backend systems</li>
+              <li>Staging and production automation using Terraform and Jenkins</li>
+              <li>Migration of legacy workflows into faster, more reliable release paths</li>
+            </ul>
+          </article>
+
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[color:var(--accent-soft)] p-3 text-[color:var(--accent)]"><i data-lucide="refresh-cw" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">Legacy Modernization</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Moving older systems toward maintainable cloud-native architecture.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Ruby to Python modernization for a 9-database backend</li>
+              <li>Serverless execution on AWS Lambda</li>
+              <li>Reduced technical debt with stronger production readiness</li>
+            </ul>
+          </article>
+
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 80ms;">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[color:var(--teal-soft)] p-3 text-[color:var(--teal)]"><i data-lucide="shield-check" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">Security & Compliance</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Security response and governance built into actual delivery work.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>AWS access-key remediation and CloudTrail investigation</li>
+              <li>IAM controls, security groups, and key-based API access</li>
+              <li>Audit trails, reporting, and compliance-aligned workflows</li>
+            </ul>
+          </article>
+
+          <article class="reveal hover-lift panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 160ms;">
+            <div class="flex items-center gap-3">
+              <div class="rounded-2xl bg-[rgba(240,185,73,0.18)] p-3 text-[#b7791f]"><i data-lucide="layout-dashboard" class="h-5 w-5"></i></div>
+              <h3 class="text-xl font-bold">Full-Stack Product Support</h3>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">Backend, frontend, and ops working together instead of in silos.</p>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>React, Next.js, Node.js, Flask, FastAPI, MongoDB</li>
+              <li>100+ REST APIs for financial and platform workflows</li>
+              <li>AI-powered analytics and support automation with ChatGPT integration</li>
+            </ul>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="py-10 border-t stroke">
-    <div class="max-w-7xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-sub text-sm">© <span id="year"></span> Divesh Kumar. All rights reserved.</p>
-      <div class="flex items-center gap-3 text-sub text-sm">
-        <a href="https://github.com/divesh-netizen" class="hover:text-main">GitHub</a>
+    <section id="skills" class="px-5 py-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+          <div>
+            <p class="eyebrow section-kicker text-xs font-bold">Skill Stack</p>
+            <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">A practical toolkit shaped by delivery work.</h2>
+            <p class="mt-5 text-base leading-8 text-[color:var(--muted)]">
+              My stack spans platform engineering, cloud infrastructure, backend systems, frontend delivery, and data workflows. The emphasis is less on buzzwords and more on what I’ve actually used in production.
+            </p>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 60ms;">
+              <h3 class="font-semibold">Cloud & DevOps</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">AWS (ECS, EC2, S3, CloudFormation, Lambda, CloudWatch, IAM), Azure, GCP, Docker, Kubernetes, Terraform, Ansible, Jenkins, GitHub Actions, Bitbucket Pipelines.</p>
+            </div>
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 120ms;">
+              <h3 class="font-semibold">Backend</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">Python, FastAPI, Flask, Django, Bash, Node.js, REST APIs, API authentication, serverless integrations.</p>
+            </div>
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 180ms;">
+              <h3 class="font-semibold">Frontend</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">React.js, Next.js, responsive UI work, dashboard interfaces, data visualization and charts.</p>
+            </div>
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 60ms;">
+              <h3 class="font-semibold">MLOps & Data</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">PySpark, ML algorithms, AutoML, preprocessing, data pipelines, model monitoring, and cloud-native ML workflows.</p>
+            </div>
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 120ms;">
+              <h3 class="font-semibold">Security & Governance</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">CloudTrail, IAM policies, security groups, infra and app-level alerts, audit trails, compliance reporting, incident remediation.</p>
+            </div>
+            <div class="reveal panel rounded-[1.75rem] p-5 shadow-soft" style="transition-delay: 180ms;">
+              <h3 class="font-semibold">Databases</h3>
+              <p class="mt-3 text-sm leading-7 text-[color:var(--muted)]">PostgreSQL, MongoDB, MySQL, SQLite, Redis, multi-database backend migration work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="px-5 py-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow section-kicker text-xs font-bold">Selected Work</p>
+            <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">Projects that show both depth and range.</h2>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-[color:var(--muted)]">
+            These are the strongest examples of how I work across cloud delivery, analytics products, reliability, and security.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <article class="reveal panel-strong rounded-[2rem] p-7 shadow-soft">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--accent-deep)]">Innovatics</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">ML_STUDIO</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">Low-code ML deployment framework across AWS, Azure, and GCP.</p>
+              </div>
+              <span class="rounded-full bg-[color:var(--accent-soft)] px-4 py-2 text-xs font-semibold text-[color:var(--accent-deep)]">Lead Developer</span>
+            </div>
+            <p class="mt-6 text-sm leading-7 text-[color:var(--muted)]">
+              Built a cloud-agnostic low-code ML platform for rapid model development, deployment, governance, and monitoring with strong compliance and audit support.
+            </p>
+            <div class="mt-6 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">Cross-cloud delivery</div>
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">Audit-ready workflows</div>
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">Serverless architecture</div>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>AutoML and preprocessing pipelines for faster project setup</li>
+              <li>Dynamic scaling, MLOps integration, and client-specific endpoint customization</li>
+              <li>RBI-aligned governance, API-key security, audit trails, and compliance reporting</li>
+            </ul>
+          </article>
+
+          <article class="reveal panel-strong rounded-[2rem] p-7 shadow-soft" style="transition-delay: 100ms;">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--teal)]">Razor Edge</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">AI-Powered Stock Market Analysis Tool</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">Financial analytics platform with ChatGPT-assisted insight generation.</p>
+              </div>
+              <span class="rounded-full bg-[color:var(--teal-soft)] px-4 py-2 text-xs font-semibold text-[color:var(--teal)]">Full Stack + DevOps</span>
+            </div>
+            <p class="mt-6 text-sm leading-7 text-[color:var(--muted)]">
+              Delivered a product that turned natural language inputs into structured market intelligence with real-time indicators, backtesting, and portfolio workflows.
+            </p>
+            <div class="mt-6 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">AI-assisted analytics</div>
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">Real-time indicators</div>
+              <div class="rounded-[1.25rem] border border-[color:var(--line)] bg-white/50 p-4 text-sm font-medium">AWS ECS deployment</div>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Prompt engineering for translating questions into structured financial expressions</li>
+              <li>Real-time technical indicators, fundamentals, trend analysis, and backtesting workflows</li>
+              <li>Flask/FastAPI APIs on AWS ECS with caching and parallel processing</li>
+            </ul>
+          </article>
+
+          <article class="reveal panel rounded-[2rem] p-7 shadow-soft">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#b7791f]">Innovatics</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">Kubernetes Compliance Platform</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">Helm-based standardized deployment with infra and app-level alerting.</p>
+              </div>
+              <span class="rounded-full bg-[rgba(240,185,73,0.2)] px-4 py-2 text-xs font-semibold text-[#9a6715]">DevOps Lead</span>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Environment-aware Helm deployments and namespace governance</li>
+              <li>Cloud CDN delivery for low-latency static UI distribution</li>
+              <li>Multi-level alerting for pods, nodes, service health, and error rates</li>
+            </ul>
+          </article>
+
+          <article class="reveal panel rounded-[2rem] p-7 shadow-soft" style="transition-delay: 100ms;">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--accent-deep)]">Innovatics</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">TenderHealth Incident Remediation</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">Critical AWS credential leakage response and recovery.</p>
+              </div>
+              <span class="rounded-full bg-[color:var(--accent-soft)] px-4 py-2 text-xs font-semibold text-[color:var(--accent-deep)]">DevOps / Security</span>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Rotated and rewired keys across environments, services, and deployment pipelines</li>
+              <li>Investigated unauthorized access patterns and role assumptions via CloudTrail</li>
+              <li>Coordinated with AWS Support and monitored production stability through the weekend</li>
+            </ul>
+          </article>
+
+          <article class="reveal panel rounded-[2rem] p-7 shadow-soft">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--teal)]">Razor Edge</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">Customer Support System</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">AI-assisted ticket triaging and real-time support workflows.</p>
+              </div>
+              <span class="rounded-full bg-[color:var(--teal-soft)] px-4 py-2 text-xs font-semibold text-[color:var(--teal)]">Automation + AI</span>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Built NLP and ML-based ticket categorization for support prioritization</li>
+              <li>Integrated ChatGPT for intent and sentiment-aware ticket routing</li>
+              <li>Improved support efficiency by 40% through workflow automation</li>
+            </ul>
+          </article>
+
+          <article class="reveal panel rounded-[2rem] p-7 shadow-soft" style="transition-delay: 100ms;">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6715]">Innovatics</p>
+                <h3 class="mt-2 font-display text-2xl font-bold">TenderHealth & Iera Delivery Work</h3>
+                <p class="mt-1 text-sm text-[color:var(--muted)]">CI/CD modernization, secure deployment R&D, and full-stack support.</p>
+              </div>
+              <span class="rounded-full bg-[rgba(240,185,73,0.2)] px-4 py-2 text-xs font-semibold text-[#9a6715]">Delivery Systems</span>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Migrated legacy UI deployment workflows to Bitbucket Pipelines for better speed and reliability</li>
+              <li>Built Terraform + Jenkins CI/CD for staging environments to reduce downtime</li>
+              <li>Handled DNS, domain mapping, secure server setup, and static deployment R&D</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="px-5 py-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal">
+          <p class="eyebrow section-kicker text-xs font-bold">Experience</p>
+          <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">Roles where I owned delivery, reliability, and outcomes.</h2>
+        </div>
+
+        <div class="timeline relative mt-10 grid gap-6">
+          <article class="reveal timeline-item panel rounded-[2rem] p-6 shadow-soft">
+            <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <h3 class="text-xl font-bold">Innovatics — Technical Lead / Solution Engineer</h3>
+              <span class="text-sm font-medium text-[color:var(--muted)]">Apr 2024 – Present</span>
+            </div>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Led ML-Studio, a cloud-agnostic ML platform for model development and deployment across AWS, Azure, and GCP.</li>
+              <li>Built and maintained CI/CD systems using Terraform, Jenkins, Bitbucket Pipelines, and Azure DevOps.</li>
+              <li>Delivered Kubernetes deployments with Helm, observability, CDN-based UI distribution, and alerting.</li>
+              <li>Implemented audit trail, audit reporting, and compliance reporting for enterprise governance needs.</li>
+              <li>Handled critical AWS incident remediation with key rotation, CloudTrail investigation, and stakeholder communication.</li>
+            </ul>
+          </article>
+
+          <article class="reveal timeline-item panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 100ms;">
+            <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <h3 class="text-xl font-bold">Razor Edge — Full Stack Developer (DevOps-Focused)</h3>
+              <span class="text-sm font-medium text-[color:var(--muted)]">Apr 2022 – Mar 2024</span>
+            </div>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--text)]">
+              <li>Built full-stack applications with React.js, Next.js, Node.js, and MongoDB.</li>
+              <li>Developed and deployed 100+ REST APIs for financial analytics and decision workflows.</li>
+              <li>Designed AWS ECS-based backend services with caching and parallel processing.</li>
+              <li>Built AI-powered analytics and support automation systems using NLP, ML, and ChatGPT integration.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="achievements" class="px-5 py-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow section-kicker text-xs font-bold">Achievements</p>
+            <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">A few outcomes that stand out.</h2>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-[color:var(--muted)]">
+            Not just tasks completed, but outcomes that changed delivery confidence, security posture, or product capability.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <div class="reveal panel rounded-[2rem] p-6 shadow-soft">
+            <p class="text-4xl font-extrabold text-[color:var(--accent)]">100+</p>
+            <h3 class="mt-4 text-lg font-bold">APIs Delivered</h3>
+            <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">Built backend workflows for financial analytics, ML systems, and product support use cases.</p>
+          </div>
+          <div class="reveal panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 80ms;">
+            <p class="text-4xl font-extrabold text-[color:var(--teal)]">40%</p>
+            <h3 class="mt-4 text-lg font-bold">Support Efficiency Gain</h3>
+            <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">Built an AI-powered support automation system that improved operational efficiency by 40%.</p>
+          </div>
+          <div class="reveal panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 160ms;">
+            <p class="text-4xl font-extrabold text-[#b7791f]">Top 60</p>
+            <h3 class="mt-4 text-lg font-bold">Hackathon Ranking</h3>
+            <p class="mt-2 text-sm leading-7 text-[color:var(--muted)]">Placed in the top 60 out of 2000+ participants in the IBCO LABS IoT Hackathon for high-availability cloud architecture design.</p>
+          </div>
+        </div>
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <div class="reveal panel rounded-[2rem] p-6 shadow-soft">
+            <h3 class="text-lg font-bold">Certifications</h3>
+            <ul class="mt-4 space-y-2 text-sm leading-7 text-[color:var(--muted)]">
+              <li>AWS Certified Solutions Architect - Associate (In Progress)</li>
+              <li>Python for Everybody Specialization</li>
+              <li>Data Analysis & Visualization with Python</li>
+              <li>React.js and Flask project-based learning</li>
+            </ul>
+          </div>
+
+          <div class="reveal panel rounded-[2rem] p-6 shadow-soft" style="transition-delay: 100ms;">
+            <h3 class="text-lg font-bold">Education</h3>
+            <p class="mt-4 text-sm leading-7 text-[color:var(--muted)]">
+              Institute of Engineering and Management, Kolkata
+              <br />
+              B.Tech in Electronics and Communication Engineering
+              <br />
+              CPI: 8.84 | Aug 2018 - Jun 2022
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="px-5 pb-20 pt-16">
+      <div class="mx-auto max-w-7xl">
+        <div class="reveal rounded-[2.25rem] border border-[color:var(--line)] bg-[linear-gradient(135deg,rgba(199,93,44,0.92),rgba(120,58,18,0.92))] p-8 text-white shadow-float md:p-10">
+          <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+            <div>
+              <p class="eyebrow text-xs font-bold text-white/70">Get In Touch</p>
+              <h2 class="mt-3 font-display text-4xl font-bold md:text-5xl">Open to solution engineering, DevOps, platform, and product opportunities.</h2>
+              <p class="mt-5 max-w-2xl text-base leading-8 text-white/82">
+                If you’re building something that needs better delivery systems, stronger cloud architecture, or a dependable engineer who can span platform and product work, let’s connect.
+              </p>
+            </div>
+
+            <div class="grid gap-3 text-sm">
+              <a href="mailto:diveshspur@gmail.com" class="rounded-[1.25rem] border border-white/20 bg-white/10 px-5 py-4 transition hover:bg-white/16">diveshspur@gmail.com</a>
+              <a href="tel:+917667180078" class="rounded-[1.25rem] border border-white/20 bg-white/10 px-5 py-4 transition hover:bg-white/16">+91 76671 80078</a>
+              <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="rounded-[1.25rem] border border-white/20 bg-white/10 px-5 py-4 transition hover:bg-white/16">LinkedIn</a>
+              <a href="https://github.com/divesh-netizen" class="rounded-[1.25rem] border border-white/20 bg-white/10 px-5 py-4 transition hover:bg-white/16">GitHub</a>
+              <a href="Divesh_Kumar_Resume.pdf" class="rounded-[1.25rem] bg-white px-5 py-4 font-semibold text-[color:var(--accent-deep)] transition hover:bg-[#fff2e4]">Download Resume</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[color:var(--line)] px-5 py-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-[color:var(--muted)] md:flex-row md:items-center md:justify-between">
+      <p>© <span id="year"></span> Divesh Kumar. Designed for a stronger first impression.</p>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/divesh-netizen" class="hover:text-[color:var(--text)]">GitHub</a>
         <span>·</span>
-        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="hover:text-main">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" class="hover:text-[color:var(--text)]">LinkedIn</a>
         <span>·</span>
-        <a href="#home" class="hover:text-main">Back to top</a>
+        <a href="#home" class="hover:text-[color:var(--text)]">Back to top</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // Icons
     lucide.createIcons();
 
-    // Copyright year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Theme switcher
-    const themeBtn = document.getElementById('themeBtn');
-    const themeMenu = document.getElementById('themeMenu');
-    const themeLabel = document.getElementById('themeLabel');
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-    const THEMES = {
-      'neon-dark': 'Neon Dark',
-      'minimal-light': 'Minimal Light',
-      'solarized': 'Solarized',
-      'royal-indigo': 'Royal Indigo',
-    };
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuBtn.setAttribute("aria-expanded", String(!isOpen));
+      });
 
-    function applyTheme(key) {
-      document.documentElement.setAttribute('data-theme', key);
-      localStorage.setItem('portfolio_theme', key);
-      themeLabel.textContent = THEMES[key] || 'Theme';
-      try { lucide.createIcons(); } catch (e) { }
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          menuBtn.setAttribute("aria-expanded", "false");
+        });
+      });
     }
 
-    const saved = localStorage.getItem('portfolio_theme');
-    if (saved && THEMES[saved]) applyTheme(saved);
+    const nav = document.getElementById("main-nav");
+    const links = nav ? Array.from(nav.querySelectorAll("a")) : [];
+    const sections = ["about", "strengths", "projects", "experience", "contact"];
 
-    themeBtn.addEventListener('click', () => themeMenu.classList.toggle('hidden'));
-    document.addEventListener('click', (e) => {
-      if (!themeBtn.contains(e.target)) themeMenu.classList.add('hidden');
-    });
-    themeMenu.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => { applyTheme(btn.dataset.theme); themeMenu.classList.add('hidden'); });
-    });
-
-    // Active link on scroll
-    const sections = ['home', 'about', 'offerings', 'skills', 'gallery', 'projects', 'experience', 'achievements', 'contact'];
-    const nav = document.getElementById('main-nav');
-    const links = nav ? Array.from(nav.querySelectorAll('a')) : [];
-    const inView = (id) => {
-      const el = document.getElementById(id);
-      if (!el) return false;
-      const rect = el.getBoundingClientRect();
-      return rect.top <= 120 && rect.bottom >= 120;
-    };
-    const setActive = () => {
+    const setActiveLink = () => {
       sections.forEach((id) => {
-        const link = links.find(a => a.getAttribute('href') === `#${id}`);
-        if (!link) return;
-        if (inView(id)) link.classList.add('text-main'); else link.classList.remove('text-main');
+        const section = document.getElementById(id);
+        const link = links.find((item) => item.getAttribute("href") === "#" + id);
+        if (!section || !link) return;
+
+        const rect = section.getBoundingClientRect();
+        const active = rect.top <= 150 && rect.bottom >= 150;
+        link.classList.toggle("active", active);
       });
     };
 
-    (function () {
-      const preview = document.getElementById('heroPreview');
-      const thumbsWrap = document.getElementById('heroThumbs');
-      if (!preview || !thumbsWrap) return;
+    const preview = document.getElementById("heroPreview");
+    const thumbsWrap = document.getElementById("heroThumbs");
+    const photoKey = "divesh_portfolio_photo";
 
-      const KEY = 'portfolio_hero_photo';
-      const savedSrc = localStorage.getItem(KEY);
-      if (savedSrc) preview.src = savedSrc;
-
-      function markActive(src) {
-        thumbsWrap.querySelectorAll('button').forEach(btn => {
-          const isActive = btn.dataset.heroSrc === src;
-          btn.classList.toggle('ring-accent', isActive);
-          btn.classList.toggle('ring-2', isActive);
-          btn.setAttribute('data-active', isActive ? 'true' : 'false');
-        });
+    if (preview && thumbsWrap) {
+      const savedSrc = localStorage.getItem(photoKey);
+      if (savedSrc) {
+        preview.src = savedSrc;
       }
 
-      markActive(preview.src);
+      const setActiveThumb = (src) => {
+        thumbsWrap.querySelectorAll("button[data-hero-src]").forEach((btn) => {
+          btn.setAttribute("data-active", btn.dataset.heroSrc === src ? "true" : "false");
+        });
+      };
 
-      thumbsWrap.addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-hero-src]');
+      setActiveThumb(preview.getAttribute("src"));
+
+      thumbsWrap.addEventListener("click", (event) => {
+        const btn = event.target.closest("button[data-hero-src]");
         if (!btn) return;
         const src = btn.dataset.heroSrc;
         preview.src = src;
-        localStorage.setItem(KEY, src);
-        markActive(src);
-        try { lucide.createIcons(); } catch (e) { }
+        localStorage.setItem(photoKey, src);
+        setActiveThumb(src);
+      });
+    }
+
+    const heroTiltCard = document.getElementById("heroTiltCard");
+
+    if (heroTiltCard && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      heroTiltCard.addEventListener("pointermove", (event) => {
+        const rect = heroTiltCard.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const rotateY = ((x / rect.width) - 0.5) * 8;
+        const rotateX = (0.5 - (y / rect.height)) * 8;
+        heroTiltCard.style.transform = "perspective(1200px) rotateX(" + rotateX.toFixed(2) + "deg) rotateY(" + rotateY.toFixed(2) + "deg) translateY(-2px)";
       });
 
-      // Basic keyboard support: arrows to move focus among thumbnails
-      thumbsWrap.addEventListener('keydown', (e) => {
-        const items = Array.from(thumbsWrap.querySelectorAll('button[data-hero-src]'));
-        const idx = items.indexOf(document.activeElement);
-        if (idx === -1) return;
-        if (e.key === 'ArrowRight') { (items[idx + 1] || items[0]).focus(); e.preventDefault(); }
-        if (e.key === 'ArrowLeft') { (items[idx - 1] || items[items.length - 1]).focus(); e.preventDefault(); }
+      heroTiltCard.addEventListener("pointerleave", () => {
+        heroTiltCard.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0)";
       });
-    })();
+    }
 
-    document.addEventListener('scroll', setActive, { passive: true });
-    setActive();
+    const revealItems = document.querySelectorAll(".reveal");
+    const revealPopItems = document.querySelectorAll(".reveal-pop");
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.18 }
+      );
+
+      revealItems.forEach((item) => revealObserver.observe(item));
+      revealPopItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("visible"));
+      revealPopItems.forEach((item) => item.classList.add("visible"));
+    }
+
+    document.addEventListener("scroll", setActiveLink, { passive: true });
+    setActiveLink();
   </script>
 </body>
-
 </html>

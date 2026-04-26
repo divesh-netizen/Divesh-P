@@ -104,7 +104,7 @@
     }
 
     /* ── Base layout ── */
-    .container { position: relative; z-index: 1; }
+    .site-wrap { position: relative; z-index: 1; }
 
     /* ── Glass panels ── */
     .glass {
@@ -479,7 +479,7 @@
 
   <!-- NAV -->
   <header class="sticky top-0 z-50 nav-glass">
-    <div class="container mx-auto flex h-[70px] max-w-7xl items-center justify-between px-5 lg:px-8">
+    <div class="mx-auto flex h-[70px] w-full max-w-7xl items-center justify-between px-5 lg:px-8">
       <a href="#home" class="font-display text-lg font-bold text-[color:var(--text)] tracking-tight">
         DK<span class="grad-text">.</span>
       </a>
@@ -518,7 +518,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="site-wrap">
 
     <!-- HERO -->
     <section id="home" class="px-5 pb-20 pt-10 lg:px-8">
@@ -1095,7 +1095,7 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-[color:var(--border)] px-5 py-8 lg:px-8">
-    <div class="container mx-auto flex max-w-7xl flex-col gap-3 text-sm text-[color:var(--muted)] md:flex-row md:items-center md:justify-between">
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-3 text-sm text-[color:var(--muted)] md:flex-row md:items-center md:justify-between">
       <p>© <span id="year"></span> Divesh Kumar.</p>
       <div class="flex items-center gap-4">
         <a href="https://github.com/divesh-netizen" class="transition hover:text-[color:var(--text)]">GitHub</a>

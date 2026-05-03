@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Weekend AWS Got Frozen — Divesh Kumar</title>
+  <meta name="description" content="How an exposed access key turned into a full incident — and the three things it taught me about IAM, third-party trust, and cloud security." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ["Manrope", "ui-sans-serif", "system-ui"],
+            display: ["Space Grotesk", "Manrope", "ui-sans-serif"],
+            mono:    ["JetBrains Mono", "ui-monospace", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg:        #0b0f1a;
+      --bg-card:   #111827;
+      --bg-card2:  #161d2e;
+      --border:    rgba(255, 255, 255, 0.09);
+      --border2:   rgba(255, 255, 255, 0.16);
+      --text:      #f0f4ff;
+      --muted:     #8892a4;
+      --muted2:    #b8c0cc;
+
+      /* Accent colors matching the design reference */
+      --red:    #f85149;
+      --amber:  #e3a008;
+      --green:  #3fb950;
+      --blue:   #58a6ff;
+      --purple: #a371f7;
+
+      --grad: linear-gradient(135deg, #7c3aed 0%, #2563eb 50%, #06b6d4 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-family: 'Manrope', sans-serif;
+    }
+
+    /* ── Subtle noise ── */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .z1 { position: relative; z-index: 1; }
+
+    /* ── Nav ── */
+    .nav-glass {
+      background: rgba(11, 15, 26, 0.85);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1.25rem; border-radius: 0.65rem;
+      font-size: 0.85rem; font-weight: 600;
+      background: var(--grad); color: #fff;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.05em; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    /* ── Reading progress ── */
+    #readProgress {
+      position: fixed; top: 69px; left: 0;
+      height: 2px; width: 0%;
+      background: var(--grad); z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    /* ═══════════════════════════════════════
+       TERMINAL HERO — matches design reference
+    ═══════════════════════════════════════ */
+    .terminal-hero {
+      background: #0d1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .terminal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .terminal-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* "AWS IAM" badge */
+    .aws-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 56px; height: 56px;
+      background: #1e2d48;
+      border: 1px solid #2d4a6e;
+      border-radius: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #58a6ff;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .incident-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .incident-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      flex-shrink: 0;
+    }
+
+    /* "FRIDAY -> SUNDAY" timeline badge */
+    .timeline-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 1rem;
+      background: var(--green);
+      border-radius: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0b0f1a;
+    }
+
+    /* Horizontal rule */
+    .terminal-rule {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* Main heading section */
+    .terminal-body {
+      padding: 2.25rem 1.75rem;
+    }
+
+    .terminal-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .terminal-heading .accent-red {
+      color: var(--red);
+    }
+
+    .terminal-sub {
+      margin-top: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--muted2);
+    }
+
+    /* Lesson preview cards */
+    .lesson-grid {
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 640px) {
+      .lesson-grid { grid-template-columns: 1fr; }
+    }
+
+    .lesson-preview {
+      background: #161d2e;
+      padding: 1.1rem 1.3rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .lesson-preview:last-child { border-right: none; }
+    @media (max-width: 640px) {
+      .lesson-preview { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .lesson-preview:last-child { border-bottom: none; }
+    }
+    .lesson-preview:hover { background: #1e2a3b; }
+
+    .lesson-num {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .lesson-num.red   { color: var(--red); }
+    .lesson-num.amber { color: var(--amber); }
+    .lesson-num.green { color: var(--green); }
+
+    .lesson-preview-top { height: 3px; }
+    .lesson-preview-top.red   { background: var(--red); }
+    .lesson-preview-top.amber { background: var(--amber); }
+    .lesson-preview-top.green { background: var(--green); }
+
+    .lesson-preview p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════
+       ARTICLE PROSE
+    ═══════════════════════════════════════ */
+    .prose-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .prose-wrap p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--muted2);
+      margin-bottom: 1.4rem;
+    }
+
+    .prose-lede {
+      font-size: 1.175rem !important;
+      line-height: 1.75 !important;
+      color: var(--text) !important;
+      font-weight: 500;
+    }
+
+    /* ── Lesson section cards ── */
+    .lesson-section {
+      background: #0d1117;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin: 3rem 0;
+    }
+
+    .lesson-section-top {
+      height: 4px;
+    }
+    .lesson-section-top.red   { background: var(--red); }
+    .lesson-section-top.amber { background: var(--amber); }
+    .lesson-section-top.green { background: var(--green); }
+
+    .lesson-section-inner { padding: 2rem 2rem 1.75rem; }
+
+    .lesson-section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .lesson-section-label.red   { color: var(--red); }
+    .lesson-section-label.amber { color: var(--amber); }
+    .lesson-section-label.green { color: var(--green); }
+
+    .lesson-section h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin: 0 0 1.25rem;
+    }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      border-left: 3px solid var(--red);
+      padding: 1rem 1.4rem;
+      margin: 1.75rem 0;
+      background: rgba(248, 81, 73, 0.06);
+      border-radius: 0 0.6rem 0.6rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Callout / questions box ── */
+    .callout {
+      background: #0d1117;
+      border: 1px solid rgba(63, 185, 80, 0.3);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin: 2.5rem 0;
+    }
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.4rem;
+      background: rgba(63, 185, 80, 0.08);
+      border-bottom: 1px solid rgba(63, 185, 80, 0.2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .callout-body {
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .callout-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--muted2);
+    }
+    .callout-item::before {
+      content: "→";
+      color: var(--green);
+      flex-shrink: 0;
+      font-size: 0.8rem;
+    }
+
+    /* ── Section divider ── */
+    .rule {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Author card ── */
+    .author-card {
+      background: #0d1117;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .author-avatar {
+      width: 52px; height: 52px;
+      border-radius: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: #fff;
+      background: var(--grad);
+      flex-shrink: 0;
+    }
+
+    /* ── Tags ── */
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted2);
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Reading progress bar -->
+  <div id="readProgress"></div>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 nav-glass">
+    <div class="mx-auto flex h-[70px] w-full max-w-7xl items-center justify-between px-5 lg:px-8">
+      <a href="index.html" class="font-display text-lg font-bold text-[color:var(--text)] tracking-tight">
+        DK<span class="grad-text">.</span>
+      </a>
+      <nav class="hidden items-center gap-6 md:flex">
+        <a href="index.html" class="back-btn">
+          <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i> Portfolio
+        </a>
+        <span class="tag" style="color:var(--blue);border-color:rgba(88,166,255,0.3);background:rgba(88,166,255,0.08)">Blog</span>
+      </nav>
+      <a href="index.html#contact" class="btn-primary text-sm hidden sm:inline-flex">
+        Hire Me <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+      </a>
+    </div>
+  </header>
+
+  <main class="z1">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="px-5 pt-12 pb-8 lg:px-8">
+      <div class="mx-auto max-w-5xl">
+
+        <!-- Back + tags -->
+        <div class="reveal flex flex-wrap items-center gap-3 mb-7">
+          <a href="index.html#blog" class="back-btn">
+            <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i> All Posts
+          </a>
+          <span class="text-[color:var(--border2)]">·</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Security</span>
+          <span class="tag">IAM</span>
+          <span class="tag">Incident</span>
+          <span class="tag">7 min read</span>
+        </div>
+
+        <!-- Terminal hero card — mirrors the design reference -->
+        <div class="reveal terminal-hero" style="transition-delay:80ms;">
+
+          <!-- Top bar -->
+          <div class="terminal-top">
+            <div class="terminal-left">
+              <div class="aws-badge">AWS<br/>IAM</div>
+              <div class="incident-meta">
+                <span class="incident-type">Incident Report</span>
+                <span class="status-badge">
+                  <span class="status-dot"></span>
+                  Status: Resolved
+                </span>
+              </div>
+            </div>
+            <span class="timeline-badge">FRIDAY &rarr; SUNDAY</span>
+          </div>
+
+          <div class="terminal-rule"></div>
+
+          <!-- Heading + sub -->
+          <div class="terminal-body">
+            <h1 class="terminal-heading">
+              How many IAM roles with administrator access exist in<br />
+              <span class="accent-red">your AWS account right now?</span>
+            </h1>
+            <p class="terminal-sub">
+              If you can't answer that instantly, keep reading.<br />
+              I couldn't either — and it cost us a full weekend.
+            </p>
+          </div>
+
+          <div class="terminal-rule"></div>
+
+          <!-- Three lesson preview tiles -->
+          <div class="lesson-grid">
+            <a href="#lesson-1" class="lesson-preview">
+              <div class="lesson-preview-top red"></div>
+              <div style="padding:1.1rem 1.3rem;">
+                <span class="lesson-num red">Lesson 1</span>
+                <p>The credential you warned<br/>about will leak first</p>
+              </div>
+            </a>
+            <a href="#lesson-2" class="lesson-preview">
+              <div class="lesson-preview-top amber"></div>
+              <div style="padding:1.1rem 1.3rem;">
+                <span class="lesson-num amber">Lesson 2</span>
+                <p>The access you didn't set up<br/>is the access you don't watch</p>
+              </div>
+            </a>
+            <a href="#lesson-3" class="lesson-preview">
+              <div class="lesson-preview-top green"></div>
+              <div style="padding:1.1rem 1.3rem;">
+                <span class="lesson-num green">Lesson 3</span>
+                <p>An incident is a gift<br/>if you use it properly</p>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ARTICLE ═══════════ -->
+    <article class="px-5 pb-24 pt-6 lg:px-8">
+      <div class="mx-auto max-w-5xl">
+        <div class="prose-wrap">
+
+          <!-- Opening -->
+          <div class="reveal">
+            <p class="prose-lede">
+              Last year I was the DevOps lead at a fast-growing startup, responsible for AWS infrastructure, CI/CD pipelines, and platform security across multiple client projects. On a Friday afternoon I got a call that a CloudFront distribution wasn't deploying. Routine issue. Except it wasn't.
+            </p>
+            <p>
+              AWS had flagged and frozen our account. An access key had been exposed. Lambda was down. Nothing new could be provisioned. The weekend had just become a work weekend — and I didn't fully understand why yet.
+            </p>
+            <p>
+              By Sunday night, I did. Here are the three things that incident taught me — and the story of how I learned each one the hard way.
+            </p>
+          </div>
+
+          <!-- ── LESSON 1 ── -->
+          <div id="lesson-1" class="lesson-section reveal">
+            <div class="lesson-section-top red"></div>
+            <div class="lesson-section-inner">
+              <span class="lesson-section-label red">
+                <i data-lucide="alert-triangle" class="h-3.5 w-3.5"></i>
+                Lesson 1
+              </span>
+              <h3>The credential you warned about<br/>will be the one that leaks.</h3>
+              <p>
+                For months I had pushed the team to stop using hardcoded AWS access keys in application code and switch to IAM instance profile roles instead. Every EC2, every ECS task — they should assume a role, not carry a key. The request was ignored. There were always more urgent things.
+              </p>
+              <p>
+                Then a developer used an AI coding tool carelessly, and the key ended up somewhere public.
+              </p>
+              <p>
+                Friday evening. CloudTrail open. I'm tracing every action that key had taken over the previous week. What I found wasn't just an accidental leak — the attacker had already moved. They had created a dummy IAM user with administrator access. Then created a <em>second</em> IAM role with administrator access, for use after we rotated the first key. <strong style="color:var(--text)">They were planning to stay.</strong>
+              </p>
+              <p>
+                We killed the compromised user entirely. Spent the rest of Friday hunting every place that key lived — Bitbucket pipelines, application configs, environment variables across three environments. Replaced everything. Locked the replacement down to no console access and minimal permissions.
+              </p>
+              <div class="pull-quote">
+                By midnight Friday we thought it was over.<br/>It wasn't.
+              </div>
+            </div>
+          </div>
+
+          <!-- ── LESSON 2 ── -->
+          <div id="lesson-2" class="lesson-section reveal">
+            <div class="lesson-section-top amber"></div>
+            <div class="lesson-section-inner">
+              <span class="lesson-section-label amber">
+                <i data-lucide="eye-off" class="h-3.5 w-3.5"></i>
+                Lesson 2
+              </span>
+              <h3>The access you didn't set up<br/>is the access you don't watch.</h3>
+              <p>
+                Saturday morning. Still seeing suspicious activity. Something was still wrong. This is where the real story starts.
+              </p>
+              <p>
+                A third-party vendor — integrated into our AWS account for payment processing — had their own IAM role sitting in our account. With administrator access. A direct trust relationship with our account. Set up before I joined, never reviewed, never questioned because the vendor had always "just worked."
+              </p>
+              <p>
+                That role was the actual entry point. The attacker had compromised something on the vendor's side and used their trusted role to get into our account with full administrator privileges. <strong style="color:var(--text)">The Friday night rotation we were so confident about had done nothing to close that door.</strong>
+              </p>
+              <p>
+                We pulled the vendor's access immediately — down to read-only for support purposes only. Then I called a senior contact at the vendor to understand what had happened on their end. That conversation was not comfortable. But it was necessary.
+              </p>
+              <p>
+                We worked through Saturday and into Sunday rebuilding.
+              </p>
+            </div>
+          </div>
+
+          <!-- ── LESSON 3 ── -->
+          <div id="lesson-3" class="lesson-section reveal">
+            <div class="lesson-section-top green"></div>
+            <div class="lesson-section-inner">
+              <span class="lesson-section-label green">
+                <i data-lucide="shield-check" class="h-3.5 w-3.5"></i>
+                Lesson 3
+              </span>
+              <h3>An incident is a gift<br/>if you use it properly.</h3>
+              <p>
+                AWS restored our account by Sunday after reviewing our remediation. But the real work wasn't getting back to normal — it was making sure normal was no longer the problem.
+              </p>
+              <p>
+                <strong style="color:var(--text)">No more hardcoded credentials.</strong> Every EC2 and ECS instance now uses IAM instance profiles — the application assumes a role, never touches a key. This is what I had asked for months earlier. The incident made it non-negotiable.
+              </p>
+              <p>
+                <strong style="color:var(--text)">Separated keys by purpose.</strong> Application-level access scoped tightly to exactly the services each app needs — specific S3 buckets, specific Lambda functions, nothing broader. CI/CD pipelines got completely separate credentials with their own scope.
+              </p>
+              <p>
+                <strong style="color:var(--text)">Audited every third-party IAM role.</strong> For each one: who set it up, what does it trust, what can it do, when did it last assume anything. Anything we couldn't explain got removed or scoped down. This audit alone found two other roles that had no business existing.
+              </p>
+              <p>
+                <strong style="color:var(--text)">Redesigned CloudTrail alerting</strong> to catch unusual role assumptions and cross-account activity in near real-time. Not after the fact. Not in a Monday morning review. In real time.
+              </p>
+            </div>
+          </div>
+
+          <!-- ── Closing questions ── -->
+          <div class="reveal">
+            <p style="color:var(--text);font-size:1.1rem;font-weight:600;margin-top:2.5rem;">
+              The questions worth asking today, before Friday comes.
+            </p>
+
+            <div class="callout">
+              <div class="callout-header">
+                <i data-lucide="terminal" class="h-3.5 w-3.5"></i>
+                Run this audit on your AWS account — now
+              </div>
+              <div class="callout-body">
+                <div class="callout-item">How many IAM roles with administrator access exist in your account right now?</div>
+                <div class="callout-item">When did each of them last assume anything?</div>
+                <div class="callout-item">Can you explain every third-party trust relationship in your account?</div>
+                <div class="callout-item">Are your EC2 and ECS workloads using instance profiles or carrying hardcoded keys?</div>
+              </div>
+            </div>
+
+            <p>
+              If any of these made you pause — that's the work. Not glamorous. Not urgent until it suddenly is.
+            </p>
+            <p>
+              I found our unknown administrator role on a Saturday, mid-incident, while thinking we had already fixed everything the night before.
+            </p>
+            <div class="pull-quote" style="border-left-color:var(--green);background:rgba(63,185,80,0.06);">
+              You have time to find yours first.
+            </div>
+          </div>
+
+          <div class="rule"></div>
+
+          <!-- Author -->
+          <div class="author-card reveal">
+            <div class="author-avatar">DK</div>
+            <div style="flex:1;min-width:0;">
+              <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);margin:0 0 0.2rem;">Divesh Kumar</p>
+              <p style="font-size:0.85rem;color:var(--muted2);margin:0 0 0.25rem;">Solution Engineer · DevOps Lead · Cloud Platforms</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);margin:0;">4+ years in AWS, Azure, GCP · Kubernetes · Terraform · CI/CD</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;flex-shrink:0;">
+              <a href="index.html#contact" class="btn-primary" style="font-size:0.8rem;">
+                Get in Touch <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+              </a>
+              <a href="index.html" class="back-btn" style="justify-content:center;padding:0.5rem;border:1px solid rgba(255,255,255,0.1);border-radius:0.5rem;">
+                ← Portfolio
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.08);padding:2rem 1.25rem;">
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-3 text-sm md:flex-row md:items-center md:justify-between" style="color:var(--muted);">
+      <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">
+        © <span id="year"></span> Divesh Kumar
+      </p>
+      <div style="display:flex;align-items:center;gap:1rem;font-size:0.8rem;">
+        <a href="index.html" style="color:var(--muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Portfolio</a>
+        <span style="color:rgba(255,255,255,0.12)">·</span>
+        <a href="https://github.com/divesh-netizen" style="color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">GitHub</a>
+        <span style="color:rgba(255,255,255,0.12)">·</span>
+        <a href="https://www.linkedin.com/in/divesh-kumar-26040a16a/" style="color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Reading progress
+    const bar = document.getElementById("readProgress");
+    document.addEventListener("scroll", () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = h > 0 ? ((window.scrollY / h) * 100).toFixed(1) + "%" : "0%";
+    }, { passive: true });
+
+    // Scroll reveal
+    if ("IntersectionObserver" in window) {
+      const obs = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); }
+        }),
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("visible"));
+    }
+  </script>
+</body>
+</html>
